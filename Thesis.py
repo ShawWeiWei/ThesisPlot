@@ -8,20 +8,10 @@ import os
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.interpolate import griddata
 from plotACofRadius import *
+from Constants import *
+from check import checkDirExists
 #import matploblib.mlab as ml
-dictLabelOfDifferentProp={15565:'(a)',14746:'(b)',13926:'(c)',13107:'(d)',12288:'(e)',11469:'(f)'\
-,10650:'(g)',9830:'(h)',9011:'(i)',8192:'(j)',7373:'(k)',6554:'(l)',5734:'(m)',4915:'(n)',4096:'(o)',3277:'(p)'\
-,2458:'(q)',1638:'(r)',819:'(s)'}
-listForI=[(1640,'(a)'),(1680,'(b)'),(1700,'(c)'),(1720,'(d)'),(1740,'(e)'),(1760,'(f)')]
-dictTimeOfDifferentPropOnlyForThesis={15565:2680,14746:1080,13926:2480,13107:2340,12288:2420,11469:2400,10650:2380,9830:2380\
-,9011:2460,8192:2360,7373:2080,6554:2344,5734:2340,4915:2424,4096:2240,3277:2502,2458:2320,1638:2140,819:1780}
-listForII=[(2928,'(a)'),(2930,'(a)','(b)'),(2934,'(c)'),(2936,'(d)'),(2956,'b')]
-dictHeterSpiralWave_0_22={1:3180,5:3360,10:4880,15:4800,20:4540,25:4640,30:4920,35:4660,40:4760,45:4860,\
-50:4980,55:4700,60:4720,65:4660,70:4940,75:4600,80:4680,85:4820,90:4800,95:4760,99:4520}
-dictHeterSpiralWave_0_25={1:4680,5:4860,10:4600,15:4960,20:4880,25:4620,30:4800,35:4720,40:4640,45:4920,\
-50:4980,55:4660,60:4980,65:4980,70:4980,75:4980,80:4980,85:4980,90:4980,95:4980,99:4980}
-BeginForGc={0.22:60,0.23:60,0.24:55,0.25:50,0.26:55,0.27:50,0.28:40,0.29:45,0.3:45,0.31:40,0.33:40}
-EndForGc={0.22:70,0.23:70,0.24:65,0.25:65,0.26:60,0.27:60,0.28:55,0.29:60,0.3:55,0.31:55,0.33:50}
+
 anno = {
 'text': '$\\sum_{k=0}^{\\infty} \\frac {(-1)^k x^{1+2k}}{(1 + 2k)!}$',
 'x': 0.3, 'y': 0.6,'xref': "paper", 'yref': "paper",'showarrow': False,
@@ -32,12 +22,7 @@ plotCharacter=['k-','k--','k-.','k:','k*-']
 fsize=16
 #fig=plt.figure()
 time_array=np.linspace(5020,7980,149)
-Raw=u'F:\\output'
-ExcitatoryCouple=u'ExcitatoryCouple'
-CoupleWithInhibition=u'CoupleWithInhibition'
-PP=u'F:\\verification\\PP'
-Visual=u'F:\\verification\\Visual'
-Thesis=u'F:\\Graduation Thesis\\FigureForThesis'
+
 time=np.linspace(2000.1,3000,10000)
 def maximumIndex(li):
     maxIndex=0
@@ -319,10 +304,7 @@ class visualize(inputData):
         if label!='':
             plt.title(label,fontsize=fsize)
         pathOut=os.path.join(Thesis,self.composition)
-        if os.path.exists(pathOut):
-            pass
-        else:
-            os.makedirs(pathOut)    
+        checkDirExists(pathOut)
         plt.savefig(os.path.join(pathOut,u'%s_t=%.5f_SpiralWave.tiff'%(self.coupleAndNoise,t)))
         del cbar
      
@@ -339,10 +321,8 @@ class visualize(inputData):
 
             plt.title(u'%s_t=%.5f'%(self.plot_title,t))
 
-            if os.path.exists(self.Visualdirect):
-                pass
-            else:
-                os.makedirs(self.Visualdirect)
+            checkDirExists(self.Visualdirect):
+            
             plt.savefig(os.path.join(self.Visualdirect,u'%s_t=%.5f.%s'%(self.coupleAndNoise,t,format)))
             del cbar
 
@@ -388,10 +368,9 @@ class visualize(inputData):
         else:
             plt.ylabel(u'type I voltage(mV)',fontsize=fsize)
         plt.xlabel(u'time(ms)',fontsize=fsize)
-        if os.path.exists(self.Outdirect):
-            pass
-        else:
-            os.makedirs(self.Outdirect)
+        
+        checkDirExists(self.Outdirect):
+      
         plt.savefig(os.path.join(self.Outdirect,u'%s_TimeSeries.tiff'%(self.coupleAndNoise)))
         
     def plotHeterTimeSeries(self):
@@ -409,10 +388,8 @@ class visualize(inputData):
         plt.xlabel(u'time(ms)',fontsize=fsize)
     
 #        plt.title(self.plot_title)
-        if os.path.exists(self.Visualdirect):
-            pass
-        else:
-            os.makedirs(self.Visualdirect)
+        checkDirExists(self.Visualdirect)
+      
         plt.savefig(os.path.join(self.Visualdirect,u'%s_TimeSeries.png'%(self.coupleAndNoise)))
 
     def plotHeterTimeAndCoupleSeries(self):
@@ -433,11 +410,10 @@ class visualize(inputData):
             plt.plot(coupleSeries[20000:,0],coupleSeries[20000:,column/2+1],'--',linewidth=2,color='black')
             plt.ylabel(u'Type II',fontsize=fsize)
             plt.xlabel(u'time(ms)',fontsize=fsize)
+            
                         
-            if os.path.exists(self.Visualdirect):
-                pass
-            else:
-                os.makedirs(self.Visualdirect)
+            checkDirExists(self.Visualdirect)
+            
             plt.savefig(os.path.join(self.Visualdirect,u'%s_TimeSeries.png'%(self.coupleAndNoise)))
     
   #animation       
@@ -464,8 +440,7 @@ class visualize(inputData):
             
             plt.title(self.plot_title)
             return mplfig_to_npimage(fig)
-        #for couple in [0.24,0.25,0.255,0.26,0.265,0.27,0.275,0.28,0.285,0.29,0.295,0.3]:#[0.65,0.7,0.75,0.8,0.85]:#[0.24,0.25,0.255,0.26,0.265,0.27,0.275]:
-        #    for noise in [0.00001,0.00002,0.00005,0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2,5]:#[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.01,0.02,0.05,0.07,0.1,0.2,0.5,0.7,1,2,5,7]:#[0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2,5]:
+    
         data=[]
         for time in time_array:
             d=self.inputSpiralWave(time)
@@ -473,10 +448,7 @@ class visualize(inputData):
         # ANIMATE WITH MOVIEPY (UPDATE THE CURVE FOR EACH t). MAKE A GIF.
         animation =mpy.VideoClip(make_frame, duration=duration)
         plt.title(self.plot_title)
-        if os.path.exists(self.Visualdirect):
-            pass
-        else:
-            os.makedirs(self.Visualdirect)
+        checkDirExists(self.Visualdirect)
         
         animation.write_gif(os.path.join(self.Visualdirect,u'%s.gif'%(self.coupleAndNoise)), fps=20)
     
@@ -503,8 +475,6 @@ class visualize(inputData):
             
             plt.title(self.plot_title)
             return mplfig_to_npimage(fig)
-        #for couple in [0.24,0.25,0.255,0.26,0.265,0.27,0.275,0.28,0.285,0.29,0.295,0.3]:#[0.65,0.7,0.75,0.8,0.85]:#[0.24,0.25,0.255,0.26,0.265,0.27,0.275]:
-        #    for noise in [0.00001,0.00002,0.00005,0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2,5]:#[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.01,0.02,0.05,0.07,0.1,0.2,0.5,0.7,1,2,5,7]:#[0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2,5]:
         data=[]
         for time in time_array:
             d=self.inputSpiralWave(time)
@@ -512,10 +482,7 @@ class visualize(inputData):
         # ANIMATE WITH MOVIEPY (UPDATE THE CURVE FOR EACH t). MAKE A GIF.
         animation =mpy.VideoClip(make_frame, duration=duration)
         plt.title(self.plot_title)
-        if os.path.exists(self.Outdirect):
-            pass
-        else:
-            os.makedirs(self.Outdirect)
+        checkDirExists(self.Outdirect)
         
         animation.write_gif(os.path.join(self.Outdirect,u'%s.gif'%(self.coupleAndNoise)), fps=20)
             
@@ -596,10 +563,7 @@ class visualize(inputData):
         plt.ylabel(r'$f$',fontsize=15)
         
         plt.title(self.plot_title)
-        if os.path.exists(self.Outdirect):
-            pass
-        else:
-            os.makedirs(self.Outdirect)
+        checkDirExists(self.Outdirect)
         plt.savefig(os.path.join(self.Outdirect,u'%s_Homo_FiringRate.%s'%(self.coupleAndNoise,format)))
         
     def plotHeterFiringRate(self,aGc_ce):
@@ -621,10 +585,7 @@ class visualize(inputData):
 #        plt.ylabel(u'Population Firing Rate(Hz)')
         plt.xlabel(r'$p ( \% ) $',fontsize=15)
         plt.ylabel(r'$f$',fontsize=15)
-        if os.path.exists(self.Visual):
-            pass
-        else:
-            os.makedirs(self.Visual)
+        checkDirExists(self.Visual)
         plt.savefig(os.path.join(self.Visual,u'Heter_FiringRate.png'))  
         
     def plotHeterFiringRateForOneAndTwo(self,gc,i_span):        
@@ -845,10 +806,7 @@ class visualize(inputData):
             plt.ylim([ymin,ymax])
             plt.xlabel(u'interspike interval')
             plt.ylabel(u'coherence variation')
-            if os.path.exists(self.Visualdirect):
-                pass
-            else:
-                os.makedirs(self.Visualdirect)
+            checkDirExists(self.Visualdirect)
                 
             filename=os.path.join(self.Visualdirect,u'i_span=%.5f_gc=%.5f_CVToISIForOneAndTwo.png'%(self.i_span,self.gc_exc))
             plt.savefig(filename)  
@@ -974,10 +932,8 @@ class visualize(inputData):
             plt.xlim([xl,xb])
          #   plt.yscale('log')
             plt.text(x,y2,'Aver=%.5f_Std=%.5f'%(np.mean(data2),np.std(data2)))
-            if os.path.exists(self.Visualdirect):
-                pass
-            else:
-                os.makedirs(self.Visualdirect)
+            
+            checkDirExists(self.Visualdirect)
                 
             filename=os.path.join(self.Visualdirect,u'i_span=%.5f_gc=%.5f_HistISIForOneAndTwo.png'%(self.i_span,self.gc_exc))
             plt.savefig(filename)  
@@ -1183,10 +1139,7 @@ class visualize(inputData):
         plt.xlabel(u'$g _s$ $(mS/cm^2)$',fontsize=15)
 #        plt.ylabel(u'Phase Order Parameter')
         plt.ylabel(r'$R$',fontsize=15)
-        if os.path.exists(self.Outdirect):
-            pass
-        else:
-            os.makedirs(self.Outdirect)
+        checkDirExists(self.Outdirect)
         plt.savefig(os.path.join(self.Outdirect,u'RandI(%.5f,%.5f)_Homo_PhaseOrder.%s'%(self.i_span,format)))
         self.setProp(saveML1,saveML2,0,0)
         self.setGc(saveGc_exc,saveGc_inh)
@@ -1207,10 +1160,7 @@ class visualize(inputData):
         plt.legend(loc='best')   
         plt.xlabel(r'$p ( \% ) $',fontsize=15)
         plt.ylabel(r'$R$',fontsize=15)
-        if os.path.exists(self.Visual):
-            pass
-        else:
-            os.makedirs(self.Visual)
+        checkDirExists(self.Visual)
         plt.savefig(os.path.join(self.Visual,u'Heter_PhaseOrder.png'))
     
 
@@ -1540,10 +1490,7 @@ class visualize(inputData):
              dataOut=np.array(Out)
              dataOut=dataOut.transpose()
              direct=os.path.join(PP,u'SNRList\\gc=%.5f'%(self.gc_exc))
-             if os.path.exists(direct):
-                pass
-             else:
-                os.makedirs(direct)
+             checkDirExists(direct)
              filename=os.path.join(PP,u'SNRList\\gc=%.5f\\i_span=%.5f_ML1=%d_SNRList.txt'%(self.gc_exc,self.i_span,self.pML1))
              np.savetxt(filename,dataOut)
              
