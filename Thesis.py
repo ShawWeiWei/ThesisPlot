@@ -64,35 +64,7 @@ def StringToDoubleArray(String):
         DataArray=np.genfromtxt(StrIOs)
         
     return DataArray
- 
-  
-def genPhase(findex):
-    count=len(findex)
-    if count<4:
-        return 
-    else:
-        index=[]
-        for i in findex:
-            index.append(int(i))
-        deltat=float(index[count-2]-index[1])/(count-3)
-        leftindex=index[0]
-        rightindex=index[1] 
-        for j in range(leftindex,rightindex):
-            yield 2*np.pi*(deltat+j-rightindex)/deltat
- 
-        
-        for m in range(1,count-2):
-            leftindex=index[m]
-            rightindex=index[m+1]
-            dt=float(rightindex-leftindex)
-            for j in range(leftindex,rightindex):
-                yield 2*np.pi*(j-leftindex)/dt
-        
-                
-        leftindex=index[count-2]
-        rightindex=index[count-1]
-        for j in range(leftindex,rightindex):
-            yield 2*np.pi*(j-leftindex)/deltat
+
             
 
 class parameterExc:
