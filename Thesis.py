@@ -388,7 +388,7 @@ class visualize(inputData):
             
             plt.savefig(os.path.join(self.Visualdirect,u'%s_TimeSeries.png'%(self.coupleAndNoise)))
     
-  #animation       
+    #animation
     def contourGif(self):
  #       time_array=np.linspace(2020,4980,149)
  #       if self.pML1>95:
