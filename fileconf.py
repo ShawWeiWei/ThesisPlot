@@ -80,7 +80,7 @@ class ExcitoryCouple:
         self.compos = u'pML1=%d%%' % self.p_ml1
         self.conn = isConn(self.con, self.p)
         self.spec_out = u'gc_exc=%.5f_v_exc=%.5f_threshold=%.5f' % (self.gc_exc, self.v_exc, self.threshold)
-        self.plot_title = u'pML=%d%%_gc=%.5f' % (self.pML1, self.gc_exc)
+        self.plot_title = u'pML=%d%%_gc=%.5f' % (self.p_ml1, self.gc_exc)
 
 
 # @implementer(fileconf)

@@ -3,7 +3,7 @@ from Constants import *
 from moviepy.video.io.bindings import mplfig_to_npimage
 import moviepy.editor as mpy
 import matplotlib.pyplot as plt
-from check import checkDirExists
+from check import *
 import types
 import os
 import plotsetting
@@ -76,23 +76,29 @@ class visualize:
             plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f' % (self.input_config.spec, t)))
             del cbar
 
-    def plotHeterFiringRate(self, key, value, xlabel = ""):
+    def plotHeterFiringRate(self, key, value, xlabel=""):
         plt.clf()
         func = self._getFileConfFunc(key)
+        quant = []
         for i, val in enumerate(value):
             func(val)
-            quant = []
-            for pML1 in aML1:
-                self.setProp(pML1)
-                data = self.inputAverISI()
-                quant.append(1000.0 * np.mean(np.reciprocal(data)))
-            plt.plot(aML1, quant, label=r'$g_s =$ $%.2f$' % gc_ce, markersize=12)
+            data = self.input_config.inputAverISI()
+            quant.append(1000.0 * np.mean(np.reciprocal(data)))
+        plt.plot(value, quant, label=r'$g_s =$ $%.2f$' % gc_ce)
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        plt.xlabel(u'Percentage of Type I Neurons(%)')
+        if (xlabel == ""):
+            plt.xlabel(xlabel)
+        else:
+            plt.xlabel(u'Percentage of Type I Neurons(%)')
         plt.ylabel(u'Population Firing Rate(Hz)')
-        plt.xlabel(r'$p ( \% ) $')
-        plt.ylabel(r'$f$')
-        self._checkDirExists()
-        plt.savefig(os.path.join(self.Visual, u'Heter_FiringRate.png'))
+        # plt.xlabel(r'$p ( \% ) $')
+        # plt.ylabel(r'$f$')
+        # self._checkDirExists()
+        midname = composeFileName(key, self.input_config)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, midname, u'_Heter_FiringRate'))
+
+        data = listTupleToArray(value, quant)
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, midname, u'_Heter_FiringRate.txt'),
+                   data)

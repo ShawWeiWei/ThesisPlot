@@ -1520,7 +1520,7 @@ if __name__=='__main__':
    for pML1 in aML1:
        para.setProp(pML1)
        instance.updateConfig(para)
-       instance.
+#       instance.
 #       instance.contourGif()
 #    instance=visualizeRandI(100,0.25,0.0)
 #    instance.plotThesisHeterSpiralWaves()
