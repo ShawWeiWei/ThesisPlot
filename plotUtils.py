@@ -73,7 +73,7 @@ class visualize:
             plt.clim(-60, 40)
             cbar = plt.colorbar()
             checkDirExists(self.input_config.visual_direct)
-            plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f' % (self.input_config.spec, t)))
+            plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f.png' % (self.input_config.spec_out, t)))
             del cbar
 
     def plotHeterFiringRate(self, key, value, xlabel=""):

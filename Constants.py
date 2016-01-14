@@ -5,7 +5,7 @@ test_time_array = np.linspace(3020, 4980, 99)
 ultimate_time_array = np.linspace(5020, 7980, 149)
 time_array = test_time_array
 # FILE PREFIX
-Raw = '/Users/yes'#u'F:\\output'
+Raw = u'F:\\output'#'/Users/yes'#
 PP = u'F:\\verification\\PP'
 Visual = u'F:\\verification\\Visual'
 Thesis = u'F:\\Graduation Thesis\\FigureForThesis'
