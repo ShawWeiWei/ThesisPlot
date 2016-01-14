@@ -76,7 +76,67 @@ class visualize:
             plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f' % (self.input_config.spec, t)))
             del cbar
 
-    def plotHeterFiringRate(self, key, value, xlabel=""):
+    # patern
+    # param: key, value, xlabel
+    # getObjFunc
+    # inputfile
+    # process data
+    # plot save
+    def plotFiringRate(self, key, value, xlabel=""):
+        plt.clf()
+        func = self._getFileConfFunc(key)
+        quant = []
+        for i, val in enumerate(value):
+            func(val)
+            data = self.input_config.inputAverISI()
+            quant.append(1000.0 * np.mean(np.reciprocal(data)))
+        plt.plot(value, quant, label=r'$g_s =$ $%.2f$' % gc_ce)
+        #        plt.title('(a)')
+        plt.legend(loc='best')
+
+        if (xlabel == ""):
+            plt.xlabel(xlabel)
+        else:
+            plt.xlabel(u'Percentage of Type I Neurons(%)')
+        plt.ylabel(u'Population Firing Rate(Hz)')
+        # plt.xlabel(r'$p ( \% ) $')
+        # plt.ylabel(r'$f$')
+        # self._checkDirExists()
+        midname = composeFileName(key, self.input_config)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, midname, u'_Heter_FiringRate'))
+
+        data = listTupleToArray(value, quant)
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, midname, u'_Heter_FiringRate.txt'),
+                   data)
+
+    def plotFiringRate(self, key, value, xlabel="", title=""):
+        plt.clf()
+        func = self._getFileConfFunc(key)
+        quant = []
+        for i, val in enumerate(value):
+            func(val)
+            data = self.input_config.inputAverISI()
+            quant.append(1000.0 * np.mean(np.reciprocal(data)))
+        plt.plot(value, quant, label=r'$g_s =$ $%.2f$' % gc_ce)
+        #        plt.title('(a)')
+        plt.legend(loc='best')
+
+        if (xlabel == ""):
+            plt.xlabel(xlabel)
+        else:
+            plt.xlabel(u'Percentage of Type I Neurons(%)')
+        plt.ylabel(u'Population Firing Rate(Hz)')
+        # plt.xlabel(r'$p ( \% ) $')
+        # plt.ylabel(r'$f$')
+        # self._checkDirExists()
+        midname = composeFileName(key, self.input_config)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, midname, u'_Heter_FiringRate'))
+
+        data = listTupleToArray(value, quant)
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, midname, u'_Heter_FiringRate.txt'),
+                   data)
+
+    def plotPhaseOrder(self, key, value, xlabel=""):
         plt.clf()
         func = self._getFileConfFunc(key)
         quant = []
