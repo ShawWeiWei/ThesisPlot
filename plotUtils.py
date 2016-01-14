@@ -1,4 +1,4 @@
-from inputdata import input
+from inputUtils import input
 
 class visualize:
     def __init__(self, input ):
