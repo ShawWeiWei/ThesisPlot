@@ -3,7 +3,7 @@ from Constants import *
 from moviepy.video.io.bindings import mplfig_to_npimage
 import moviepy.editor as mpy
 import matplotlib.pyplot as plt
-from check import *
+from utils import *
 import types
 import os
 import plotsetting
@@ -13,9 +13,7 @@ class visualize:
     def __init__(self, input_config):
         self.input_config = input_config
 
-    def _checkDirExists(self):
-        checkDirExists(self.input_config.visual_direct)
-        checkDirExists(self.input_config.pp_direct)
+
 
     def _getFileConfFunc(self, key):
         func_name = FUNC_SET_PREFIX + key

@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from scipy.interpolate import griddata
 from plotACofRadius import *
 from Constants import *
-from check import checkDirExists
+from utils import checkDirExists
 #import matploblib.mlab as ml
 
 anno = {

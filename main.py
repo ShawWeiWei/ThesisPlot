@@ -1,7 +1,7 @@
 from fileconf import *
 from inputUtils import *
 from plotUtils import *
-from check import *
+from utils import *
 if __name__ == "__main__":
     file_conf = ExcitoryCouple(50, 0.27, 36, -25, "Square")
     input_util = input(file_conf)
