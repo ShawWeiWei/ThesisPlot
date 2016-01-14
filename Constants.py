@@ -1,14 +1,18 @@
-# import numpy as np
+import numpy as np
 
 aML1 = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99]
 test_time_array = np.linspace(3020, 4980, 99)
 ultimate_time_array = np.linspace(5020, 7980, 149)
-
+time_array = test_time_array
 # FILE PREFIX
-Raw = u'F:\\output'
+Raw = '/Users/yes'#u'F:\\output'
 PP = u'F:\\verification\\PP'
 Visual = u'F:\\verification\\Visual'
 Thesis = u'F:\\Graduation Thesis\\FigureForThesis'
+
+FUNC_SET_PREFIX = "set_"
+
+TEST_PLOT = True
 
 # PLOT TITLE
 dictLabelOfDifferentProp = {15565: '(a)', 14746: '(b)', 13926: '(c)', 13107: '(d)', 12288: '(e)', 11469: '(f)' \

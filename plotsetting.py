@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 #line
@@ -35,10 +34,10 @@ mpl.rcParams['ytick.labelsize']=14
 
 
 #saving figures
-mpl.rcParams['savefig.dpi']=400
+mpl.rcParams['savefig.dpi']=100
 mpl.rcParams['savefig.facecolor']='white'
 mpl.rcParams['savefig.format']='tiff'
 
-print 'a'
+
 
 
