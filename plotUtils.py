@@ -1,3 +1,5 @@
+#!/usr/bin/python
+#-*-coding:utf-8-*-
 from inputUtils import input
 from Constants import *
 from moviepy.video.io.bindings import mplfig_to_npimage

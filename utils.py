@@ -3,6 +3,8 @@ import os
 import numpy as np
 
 from scipy.signal import correlate2d
+#-*-coding:utf-8-*-
+
 
 def _checkDirExists(dir):
     if os.path.exists(dir):
@@ -52,6 +54,19 @@ def autoCorr(matrix):
     max_ele = matrix[shape[0] / 2, shape[1] / 2]
     return matrix[shape[0] / 2:, shape[1] / 2:] / max_ele
 
+
+def procSSF(averSSF):
+    S = np.fft.fftshift(averSSF)
+    # add a line and row in the middle
+    s = averSSF.shape
+    n = s[0]
+    # SS = [S(1:n / 2, 1:n);zeros(1, n);S(n / 2 + 1:n, 1:n)]
+    # SSS = [SS(1:n + 1, 1:n / 2), zeros(n + 1, 1), SS(1:n + 1, n / 2 + 1:n)];
+    SS = np.concatenate((averSSF[:n/2,:], np.zeros([1,n]), averSSF[n/2:,:]), axis=0)
+    SSS = np.concatenate((SS[:,:n/2], np.zeros([n+1,1]), SS[:,(n/2):]), axis=1)
+    return SSS
+
+
 def _makeXLabel(key):
     if key == "gc_exc":
         return "excitatory coupling intensity"
@@ -72,7 +87,7 @@ def _makeXLabel(key):
     else:
         raise ValueError
 
-def makeXLabel(key,xlabel):
+def makeXLabel(key, xlabel):
     if xlabel == "":
         return _makeXLabel(key)
     else:
