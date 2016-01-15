@@ -75,6 +75,22 @@ class visualize:
             del cbar
 
     def plotTimeSeries(self):
+        data=self.input_config.inputTimeSeries()
+#        print data
+        column=np.size(data[0,:])
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(data[20000:,0],data[20000:,1])
+        plt.title(self.plot_title)
+        plt.ylabel(u'type I voltage(mV)')
+        plt.subplot(212)
+        plt.plot(data[20000:,0],data[20000:,column/2+1])
+        plt.ylabel(u'type II voltage(mV)')
+        plt.xlabel(u'time(ms)')
+
+#        plt.title(self.plot_title)
+        checkDirExists(self.Visualdirect)
+        plt.savefig(os.path.join(self.Visualdirect,u'%s_TimeSeries.png'%(self.coupleAndNoise)))
 
     def plotFiringRate(self, key, value, xlabel=""):
         plt.clf()
@@ -88,17 +104,86 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        #todo
-        if (xlabel == ""):
-            plt.xlabel(xlabel)
-        else:
-            plt.xlabel(u'Percentage of Type I Neurons(%)')
+        makeXLabel(key,xlabel)
         plt.ylabel(u'Population Firing Rate(Hz)')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, midname, u'_FiringRate'))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRate'%midname))
 
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, midname, u'_FiringRate.txt'),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRate.txt'%midname),
+                   data)
+
+    def plotFiringRateForIandII(self, key, value, xlabel=""):
+        plt.clf()
+        func = self._getFileConfFunc(key)
+        quant1 = []
+        quant2 = []
+        for i, val in enumerate(value):
+            func(val)
+            data1 = self.input_config.inputAverISIType1()
+            data2 = self.input_config.inputAverISIType2()
+            quant1.append(1000.0 * np.mean(np.reciprocal(data1)))
+            quant2.append(1000.0 * np.mean(np.reciprocal(data2)))
+        plt.plot(value, quant1)
+        plt.plot(value, quant2)
+        #        plt.title('(a)')
+        #todo legend
+        plt.legend(loc='best')
+
+        makeXLabel(key,xlabel)
+        plt.ylabel(u'Population Firing Rate(Hz)')
+        midname = composeFileName(key, self.input_config)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII'%midname))
+
+        data = listTupleToArray(value, quant1, quant2)
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII.txt'%midname),
+                   data)
+
+    def plotCV(self, key, value, xlabel=""):
+        plt.clf()
+        func = self._getFileConfFunc(key)
+        quant = []
+        for i, val in enumerate(value):
+            func(val)
+            data = self.input_config.inputCV()
+            quant.append(np.mean(data))
+        plt.plot(value, quant)
+        #        plt.title('(a)')
+        plt.legend(loc='best')
+
+        makeXLabel(key,xlabel)
+        plt.ylabel(u'Coherence variance(Hz)')
+        midname = composeFileName(key, self.input_config)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CV'%midname))
+
+        data = listTupleToArray(value, quant)
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CV.txt'%midname),
+                   data)
+
+    def plotCVForIandII(self, key, value, xlabel=""):
+        plt.clf()
+        func = self._getFileConfFunc(key)
+        quant1 = []
+        quant2 = []
+        for i, val in enumerate(value):
+            func(val)
+            data1 = self.input_config.inputCVType1()
+            data2 = self.input_config.inputCVType2()
+            quant1.append(np.mean(data1))
+            quant2.append(np.mean(data2))
+        plt.plot(value, quant1)
+        plt.plot(value, quant2)
+        #        plt.title('(a)')
+        #todo legend
+        plt.legend(loc='best')
+
+        makeXLabel(key,xlabel)
+        plt.ylabel(u'coherence variance')
+        midname = composeFileName(key, self.input_config)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CVForIandII'%midname))
+
+        data = listTupleToArray(value, quant1, quant2)
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CVForIandII.txt'%midname),
                    data)
 
     def plotPhaseOrder(self, key, value, xlabel=""):
@@ -113,16 +198,12 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        #todo create a module to make xlabel
-        if (xlabel == ""):
-            plt.xlabel(xlabel)
-        else:
-            plt.xlabel(u'Percentage of Type I Neurons(%)')
-        plt.ylabel(u'Population Firing Rate(Hz)')
+        makeXLabel(key,xlabel)
+        plt.ylabel(u'sychronization index')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, midname, u'_PhaseOrder'))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_PhaseOrder'%midname))
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, midname, u'_PhaseOrder.txt'),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.txt'%midname),
                    data)
 
     def plotNetISI(self, key, value, xlabel=""):
@@ -131,20 +212,16 @@ class visualize:
         quant = []
         for i, val in enumerate(value):
             func(val)
-            data = self.input_config.inputPhaseAmplitude()
+            data = self.input_config.inputAverISI()
             quant.append(np.mean(data))
         plt.plot(value, quant)
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        #todo create a module to make xlabel
-        if (xlabel == ""):
-            plt.xlabel(xlabel)
-        else:
-            plt.xlabel(u'Percentage of Type I Neurons(%)')
-        plt.ylabel(u'Population Firing Rate(Hz)')
+        makeXLabel(key,xlabel)
+        plt.ylabel(u'Population average isi')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, midname, u'_PhaseOrder'))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_NetISI'%midname))
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, midname, u'_PhaseOrder.txt'),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.txt')%midname,
                    data)

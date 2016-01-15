@@ -2,6 +2,8 @@ from Constants import *
 from utils import autoCorr
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import os
+
 
 class process:
     def __init__(self, input_config):
@@ -18,17 +20,18 @@ class process:
 
         averAC = sumAutoCorr / len(time_array)
 
+        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_averAutoCorr.txt' % self.input_config.spec))
         # plt.
 
 
 if __name__ == '__main__':
-    xa = range(1,4)
-    ya = range(1,4)
-    z = [[1,2,3],[4,5,6],[1,6,7]]
+    xa = range(1, 4)
+    ya = range(1, 4)
+    z = [[1, 2, 3], [4, 5, 6], [1, 6, 7]]
     x, y = np.meshgrid(xa, ya)
     fig = plt.figure()
     # ax = fig.add_subplot(111, projection='3d')
-    ax = plt.axes(projection = '3d')
+    ax = plt.axes(projection='3d')
     ax.plot_surface(x, y, z)
     ax.set_xlabel('X Label')
     ax.set_ylabel('Y Label')

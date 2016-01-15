@@ -51,3 +51,29 @@ def autoCorr(matrix):
     shape = matrix.shape
     max_ele = matrix[shape[0] / 2, shape[1] / 2]
     return matrix[shape[0] / 2:, shape[1] / 2:] / max_ele
+
+def _makeXLabel(key):
+    if key == "gc_exc":
+        return "excitatory coupling intensity"
+    elif key == "gc_inh":
+        return "inhibitory coupling intensity"
+    elif key == "v_exc":
+        return "excitory voltage"
+    elif key == "v_inh":
+        return "inhibitory voltage"
+    elif key == "threshold":
+        return "threshold"
+    elif key == "p":
+        return "rewiring probability"
+    elif key == "p_ml1":
+        return "the percentage of ml1"
+    elif key == "p_ml2":
+        return "the percentage of ml2"
+    else:
+        raise ValueError
+
+def makeXLabel(key,xlabel):
+    if xlabel == "":
+        return _makeXLabel(key)
+    else:
+        return xlabel
