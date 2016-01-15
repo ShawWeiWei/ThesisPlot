@@ -23,6 +23,30 @@ class process:
         np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_averAutoCorr.txt' % self.input_config.spec))
         # plt.
 
+    def ssf(self):
+        matrix=load(filenameIn);
+        F=fft2(matrix);
+        abs_H=abs(F);
+        H=H+abs_H.*abs_H;
+
+%        mesh(x,y,container);
+%        xlim([1,128]);
+%        ylim([1,128]);
+%        saveas(gcf,sprintf('%s\\%s_AC_t=%.5f.png',pathOut,coupleAndNoise,t(idx3)));
+%        a=normalize1(matrix);
+%        s=sum(sum(a));
+%        if s>max
+%            max=s;
+%            max_idx=idx3;
+%        end
+    end
+    HH=H./size(t,2);
+
+
+    S=fftshift(HH);
+    SS=[S(1:n/2,1:n);zeros(1,n);S(n/2+1:n,1:n)];
+    SSS=[SS(1:n+1,1:n/2),zeros(n+1,1),SS(1:n+1,n/2+1:n)];%%%%%%%%%%%%%%中间加入一行一列零
+
 
 if __name__ == '__main__':
     xa = range(1, 4)
