@@ -9,8 +9,8 @@ class input:
         self.raw_direct = ""
         self.pp_direct = ""
         self.visual_direct = ""
-        self.spec_in = ""
-        self.spec_out = ""
+        self.spec = ""
+
 
     def updateConfig(self, file_configure):
         self.file_configure = file_configure
@@ -21,27 +21,26 @@ class input:
         self.raw_direct = os.path.join(Raw, mid)
         self.pp_direct = os.path.join(PP, mid)
         self.visual_direct = os.path.join(Visual, mid)
-        self.spec_in = self.file_configure.spec_in
-        self.spec_out = self.file_configure.spec_out
+        self.spec = self.file_configure.spec
         # self.plot_title = self.parameter.plot_title
 
         # input raw data
 
     def inputTimeSeries(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_TimeSeries.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_TimeSeries.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputCoupleSeries(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_CoupleSeries.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_CoupleSeries.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputSpiralWave(self, time):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_t=%.5f.dat' % (self.spec_in, time))
+        filename = os.path.join(self.raw_direct, u'%s_t=%.5f.dat' % (self.spec, time))
         data = np.loadtxt(filename)
         return data
 
@@ -49,19 +48,19 @@ class input:
     def inputAutoCorrelation(self, time):
         self.updateDirect()
         #TODO
-        filename = os.path.join(self.pp_direct, u'%s_AC.dat' % (self.spec_out, time))
+        filename = os.path.join(self.pp_direct, u'%s_AC.dat' % (self.spec, time))
         data = np.loadtxt(filename)
         return data
 
     def inputAutoCorrelationAverage(self):
         self.updateDirect()
-        filename = os.path.join(self.pp_direct, u'%s_AC_Average.dat' % self.spec_out)
+        filename = os.path.join(self.pp_direct, u'%s_AC_Average.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputFFT(self, time):
         self.updateDirect()
-        filename = os.path.join(self.pp_direct, u'%s_FFT.dat' % (self.spec_out, time))
+        filename = os.path.join(self.pp_direct, u'%s_FFT.dat' % (self.spec, time))
         data = np.loadtxt(filename)
         return data
 
@@ -73,42 +72,42 @@ class input:
 
     def inputPhaseAmplitude(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_PhaseAmplitude.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_PhaseAmplitude.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputAverISIType1(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_AverISIType1.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_AverISIType1.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputAverISIType2(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_AverISIType2.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_AverISIType2.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputAverISI(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_AverISI.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_AverISI.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputCVType1(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_CVType1.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_CVType1.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputCVType2(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_CVType2.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_CVType2.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
     def inputCV(self):
         self.updateDirect()
-        filename = os.path.join(self.raw_direct, u'%s_CV.dat' % self.spec_in)
+        filename = os.path.join(self.raw_direct, u'%s_CV.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
