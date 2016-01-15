@@ -1,8 +1,3 @@
-from zope.interface import Interface
-from zope.interface import implementer
-from zope.interface import implements
-
-
 def isConn(con, p):
     if con == 'Square':
         connection = 'Square'
@@ -79,7 +74,8 @@ class ExcitoryCouple:
         self.compos = u'pML1=%d%%' % self.p_ml1
         self.conn = isConn(self.con, self.p)
         self.spec = u'gc_exc=%.5f_v_exc=%.5f_threshold=%.5f' % (self.gc_exc, self.v_exc, self.threshold)
-        self.plot_title = u'pML=%d%%_gc=%.5f' % (self.p_ml1, self.gc_exc)
+        self.plot_title = '''pML1=%d%%_%s_gc_exc=%.5f''' % \
+                          (self.p_ml1, self.conn, self.gc_exc)
 
 
 # @implementer(fileconf)
@@ -89,6 +85,7 @@ class InhibitoryCouple:
         self.conn = ""
         self.compos = ""
         self.spec = ""
+        self.plot_title = ""
 
         self.con = con
         self.p = p
@@ -145,5 +142,7 @@ class InhibitoryCouple:
                     (self.gc_exc, self.v_exc, self.gc_inh, self.v_inh, self.threshold)
         self.compos = u'pML1=%d%%_pML2=%d%%' % (self.p_ml1, self.p_ml2)
         self.conn = isConn(self.con, self.p)
-        # self.plot_title = 'pML1=%d%%_pML2=%d%%_gc_exc=%.5f_gc_inh=%.5f' % \
-        #                   (self.pML1, self.pML2, self.gc_exc, self.gc_inh)
+        self.plot_title = '''pML1=%d%%_pML2=%d%%
+                                  %s
+                        gc_exc=%.5f_gc_inh=%.5f''' % \
+                          (self.p_ml1, self.p_ml2, self.conn, self.gc_exc, self.gc_inh)
