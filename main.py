@@ -5,7 +5,7 @@ from fileconf import *
 from inputUtils import *
 from plotUtils import *
 from utils import *
-
+from procUtils import *
 def com(averSSF):
     s = averSSF.shape
     n = s[0]
@@ -16,27 +16,32 @@ def com(averSSF):
     return SSS
 
 if __name__ == "__main__":
-    file_conf = ExcitoryCouple(50, 0.27, 36, -25, "Square")
+    file_conf = ExcitoryCouple(50, 0.25, 36, -25, "Square")
     input_util = input(file_conf)
+    proc_util = process(input_util)
+   # proc_util.averAutoCorr()
+   # proc_util.averAutoCorrList()
+    proc_util.averSSF()
+    proc_util.averSSFList()
+
     plot_util = visualize(input_util)
+    # plot_util.plotTimeSeries()
+   # plot_util.contourGif()
+    plot_util.plotAverAutoCorr()
+    plot_util.plotAverAutoCorrList()
+    plot_util.plotAverSSF()
+    plot_util.plotAverSSFList()
+
+
+
     #plot_util.plotSpiralWaves()
     # plot_util.testPlot()
     keyvalue = {"gc_ex":[1,2,3]}
-    def test(key,value,obj):
-        func_name = "set_"+key
-        func = getattr(obj,func_name)
-        for a in value:
-            func(a)
-
-    averSSF = np.array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
-
-    print com(averSSF)
 
 
-#    test("gc_ex",[1,2,3],file_conf)
-#    listTupleToArray([1,2,3],[2,3,4])
+
+
+
+
 
 

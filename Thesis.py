@@ -983,7 +983,7 @@ class visualize(inputData):
     def plotISIAndCVAndCoupling(self,gc,i_span): 
         self.setGc(gc)
         self.setISpan(i_span)
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_ML1=1_ISIAndCVAndCoupling.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_ML1=1_ISIAndCVAndCoupling.dat'%(self.i_span,self.gc_exc))
         if not os.path.isfile(filename):
             print 'file not found!'
         aML1=[1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,99]
@@ -1002,7 +1002,7 @@ class visualize(inputData):
         
         for pML1 in aML1:
             config='F:\\config\\ML1=%d_NO.dat'%(pML1)
-            NoMatrix=np.loadtxt(config)
+            NoMatrix=np.loaddat(config)
        #     row=np.size(NoMatrix[:,0])
             column=np.size(NoMatrix[0,:])
             self.setProp(pML1)
@@ -1161,7 +1161,7 @@ class visualize(inputData):
         Out.append(aQI2)
         dataOut=np.array(Out)
         dataOut.tranpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HomoPhaseOrder.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HomoPhaseOrder.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,data)
 
             
@@ -1179,7 +1179,7 @@ class visualize(inputData):
         Out.append(aQI)
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterPhaseOrder.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterPhaseOrder.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut)
 
     def savePoints(self,gc,i_span):
@@ -1208,7 +1208,7 @@ class visualize(inputData):
                 plt.plot(a,listAC)
                 plt.savefig(os.path.join(self.Visualdirect,u'gc=%.5f_i_span=%.5f_SNRList.png'%(self.gc_exc,self.i_span)))
                 Out.append([pML1,99,99,99])
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterPoints.txt'%(self.i_span,self.gc_exc))    
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterPoints.dat'%(self.i_span,self.gc_exc))
         dataOut=np.array(Out)
         np.savetxt(filename,dataOut)
             
@@ -1253,7 +1253,7 @@ class visualize(inputData):
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
         
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterDeltaQAndQMax.txt'%(self.i_span,self.gc_exc))   
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterDeltaQAndQMax.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut)
         
     def saveDeltaQAndQMaxFromPointsRaw(self,gc,i_span):
@@ -1265,7 +1265,7 @@ class visualize(inputData):
         DeltaQ=[]
         QMax=[]
         Out.append(aML1)
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterPoints.txt'%(self.i_span,self.gc_exc))    
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterPoints.dat'%(self.i_span,self.gc_exc))
         points=np.loadtxt(filename)
         a1=range(0,100)
         for i,pML1 in enumerate(aML1):
@@ -1297,7 +1297,7 @@ class visualize(inputData):
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
         
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterDeltaQAndQMaxRaw.txt'%(self.i_span,self.gc_exc))   
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterDeltaQAndQMaxRaw.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut)            
     def saveHeterFiringRateForOneAndTwo(self,gc,i_span):        
         self.setGc(gc)
@@ -1325,7 +1325,7 @@ class visualize(inputData):
         Out.append(aFreStdType2)
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterFiringRateForOneAndTwo.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterFiringRateForOneAndTwo.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut) 
                     
     def saveSNRList(self,pML1,gc,i_span):
@@ -1341,7 +1341,7 @@ class visualize(inputData):
         Out.append(SNRList)
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
-        filename=os.path.join(self.PP,u'i_span=%.5f_gc=%.5f_ML1=%d_SNRList.txt'%(self.i_span,self.gc_exc,self.ml1))
+        filename=os.path.join(self.PP,u'i_span=%.5f_gc=%.5f_ML1=%d_SNRList.dat'%(self.i_span,self.gc_exc,self.ml1))
         np.savetxt(filename,dataOut)
  
         
@@ -1371,7 +1371,7 @@ class visualize(inputData):
         Out.append(aQI2)
         dataOut=np.array(Out)
         dataOut.tranpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HomoSNR.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HomoSNR.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,data)
         self.setProp(saveML1)
         self.setGc(saveGc_exc)
@@ -1390,7 +1390,7 @@ class visualize(inputData):
         Out.append(aQI)
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterSNR.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterSNR.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut)
     def saveHeterCV(self,gc,i_span):
         self.setGc(gc)
@@ -1416,7 +1416,7 @@ class visualize(inputData):
         Out.append(aTotal)
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterCV.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterCV.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut)
     def saveISIAndCVAndCoupling(self,gc,i_span,pML1):
         self.setGc(gc)
@@ -1444,7 +1444,7 @@ class visualize(inputData):
             OneNeuron.append(np.mean(coupling[:,i+1]))
             Out.append(OneNeuron)
         Out=np.array(Out)
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_ML1=%d_ISIAndCVAndCoupling.txt'%(self.i_span,self.gc_exc,self.pML1))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_ML1=%d_ISIAndCVAndCoupling.dat'%(self.i_span,self.gc_exc,self.pML1))
         np.savetxt(filename,Out)
             
     def saveSNR_List(self,gc,i_span):
@@ -1463,7 +1463,7 @@ class visualize(inputData):
              dataOut=dataOut.transpose()
              direct=os.path.join(PP,u'SNRList\\gc=%.5f'%(self.gc_exc))
              checkDirExists(direct)
-             filename=os.path.join(PP,u'SNRList\\gc=%.5f\\i_span=%.5f_ML1=%d_SNRList.txt'%(self.gc_exc,self.i_span,self.pML1))
+             filename=os.path.join(PP,u'SNRList\\gc=%.5f\\i_span=%.5f_ML1=%d_SNRList.dat'%(self.gc_exc,self.i_span,self.pML1))
              np.savetxt(filename,dataOut)
              
     def saveHomoFiringRate(self,i_span):        
@@ -1488,7 +1488,7 @@ class visualize(inputData):
         Out.append(aQI2)
         dataOut=np.array(Out)
         dataOut=dataOut.tranpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HomoFiringRate.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HomoFiringRate.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,data)
 
         
@@ -1507,7 +1507,7 @@ class visualize(inputData):
         Out.append(aQI)
         dataOut=np.array(Out)
         dataOut=dataOut.transpose()
-        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterFiringRate.txt'%(self.i_span,self.gc_exc))
+        filename=os.path.join(PP,u'i_span=%.5f_gc=%.5f_HeterFiringRate.dat'%(self.i_span,self.gc_exc))
         np.savetxt(filename,dataOut)
         
 #plot

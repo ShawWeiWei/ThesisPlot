@@ -3,7 +3,7 @@ from utils import *
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import os
-
+from plotACofRadius import *
 
 class process:
     def __init__(self, input_config):
@@ -17,10 +17,9 @@ class process:
                 sumAutoCorr = autoCorr(matrix)
             else:
                 sumAutoCorr = sumAutoCorr + autoCorr(matrix)
-
         averAC = sumAutoCorr / len(time_array)
-
-        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_averAutoCorr.txt' % self.input_config.spec))
+        checkDirExists(self.input_config)
+        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_AverAutoCorr.dat' % self.input_config.spec), averAC)
         # plt.
 
     def averSSF(self, time_array=time_array):
@@ -28,14 +27,27 @@ class process:
         for time in time_array:
             matrix = self.input_config.inputSpiralWave(time)
             if sumSSF == None:
-                sumSSF = np.square(np.fft.fft2(matrix))
+                sumSSF = np.square(np.abs(np.fft.fft2(matrix)))
             else:
-                sumSSF = sumSSF + np.square(np.fft.fft2(matrix))
-
+                sumSSF = sumSSF + np.square(np.abs(np.fft.fft2(matrix)))
         rawSSF = sumSSF/len(time_array)
         averSSF = procSSF(rawSSF)
+        checkDirExists(self.input_config)
+        spa = averSSF.shape
+        n = spa[0]
+        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_AverSSF.dat' % self.input_config.spec), averSSF[n/2+1:,n/2+1:])
 
-        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_averSSF.txt' % self.input_config.spec))
+    def averAutoCorrList(self):
+        data = self.input_config.inputAverAutoCorr()
+        ls = makeACList(data)
+        checkDirExists(self.input_config)
+        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_AverAutoCorrList.dat' % self.input_config.spec), ls)
+
+    def averSSFList(self):
+        data = self.input_config.inputAverSSF()
+        ls = makeFFT2List(data)
+        checkDirExists(self.input_config)
+        np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_AverSSFList.dat' % self.input_config.spec), ls)
 
 
 
