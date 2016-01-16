@@ -152,4 +152,4 @@ if __name__ == '__main__':
     # plotSquare()
     # plotRegular()
     #plotFullConnectedNetwork()
-    plotSmallWorld(0.2)
+#    plotSmallWorld(0.2)

@@ -26,29 +26,18 @@ if __name__ == "__main__":
         for gc_exc in aGc:
             file_conf.set_gc_exc(gc_exc)
             plot_util.contourGif()
+            plot_util.plotSpiralWaves()
             proc_util.averSSF()
-            proc_util.
+            proc_util.averSSFList()
             proc_util.averAutoCorr()
-    input_util = input(file_conf)
-    plot_util = visualize(input_util)
-    #plot_util.plotSpiralWaves()
-    # plot_util.testPlot()
-    keyvalue = {"gc_ex":[1,2,3]}
-    def test(key,value,obj):
-        func_name = "set_"+key
-        func = getattr(obj,func_name)
-        for a in value:
-            func(a)
-
-    averSSF = np.array([[1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4],
-       [1, 2, 3, 4]])
-
-    print com(averSSF)
+            proc_util.averAutoCorrList()
+            plot_util.plotAverAutoCorrList()
+            plot_util.plotAverSSFList()
 
 
-#    test("gc_ex",[1,2,3],file_conf)
-#    listTupleToArray([1,2,3],[2,3,4])
+
+
+
+
 
 

@@ -142,7 +142,6 @@ class InhibitoryCouple:
                     (self.gc_exc, self.v_exc, self.gc_inh, self.v_inh, self.threshold)
         self.compos = u'pML1=%d%%_pML2=%d%%' % (self.p_ml1, self.p_ml2)
         self.conn = isConn(self.con, self.p)
-        self.plot_title = '''pML1=%d%%_pML2=%d%%
-                                  %s
-                        gc_exc=%.5f_gc_inh=%.5f''' % \
+        self.plot_title = '''pML1=%d%%_pML2=%d%%_%s
+                            gc_exc=%.5f_gc_inh=%.5f''' % \
                           (self.p_ml1, self.p_ml2, self.conn, self.gc_exc, self.gc_inh)

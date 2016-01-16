@@ -21,7 +21,7 @@ class input:
         self.pp_direct = os.path.join(PP, mid)
         self.visual_direct = os.path.join(Visual, mid)
         self.spec = self.file_configure.spec
-        # self.plot_title = self.parameter.plot_title
+        self.plot_title = self.file_configure.plot_title
 
         # input raw data
 
@@ -44,30 +44,29 @@ class input:
         return data
 
     # input processed data
-    def inputAutoCorrelation(self, time):
+    def inputAverAutoCorr(self):
         self.updateDirect()
-        # TODO
-        filename = os.path.join(self.pp_direct, u'%s_AC.dat' % (self.spec, time))
+        filename = os.path.join(self.pp_direct, u'%s_AverAutoCorr.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
-    def inputAutoCorrelationAverage(self):
+    def inputAverAutoCorrList(self):
         self.updateDirect()
-        filename = os.path.join(self.pp_direct, u'%s_AC_Average.dat' % self.spec)
+        filename = os.path.join(self.pp_direct, u'%s_AverAutoCorrList.dat'%self.spec)
         data = np.loadtxt(filename)
         return data
 
-    def inputFFT(self, time):
+    def inputAverSSF(self):
         self.updateDirect()
-        filename = os.path.join(self.pp_direct, u'%s_FFT.dat' % (self.spec, time))
+        filename = os.path.join(self.pp_direct, u'%s_AverSSF.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
-    # def inputSpikingIndex(self):
-    #     self.updateDirect()
-    #     filename = u'%s\\%s_SpikingIndex.dat' % (self.raw_direct, self.spec)
-    #     data = open(filename, 'r')
-    #     return data
+    def inputAverSSFList(self):
+        self.updateDirect()
+        filename = os.path.join(self.pp_direct, u'%s_AverSSFList.dat'%self.spec)
+        data = np.loadtxt(filename)
+        return data
 
     def inputPhaseAmplitude(self):
         self.updateDirect()

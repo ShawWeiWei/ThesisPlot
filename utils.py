@@ -10,7 +10,7 @@ def _checkDirExists(dir):
     if os.path.exists(dir):
         pass
     else:
-        os.mkdir(dir)
+        os.makedirs(dir)
 
 
 def checkDirExists(input_config):
@@ -56,7 +56,7 @@ def autoCorr(matrix):
 
 
 def procSSF(averSSF):
-    S = np.fft.fftshift(averSSF)
+    averSSF = np.fft.fftshift(averSSF)
     # add a line and row in the middle
     s = averSSF.shape
     n = s[0]
