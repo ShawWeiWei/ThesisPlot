@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*-coding:utf-8-*-
+# -*-coding:utf-8-*-
 from inputUtils import input
 from Constants import *
 from moviepy.video.io.bindings import mplfig_to_npimage
@@ -15,7 +15,8 @@ class visualize:
     def __init__(self, input_config):
         self.input_config = input_config
 
-
+    def set_input_config(self, input_config):
+        self.input_config = input_config
 
     def _getFileConfFunc(self, key):
         func_name = FUNC_SET_PREFIX + key
@@ -73,26 +74,27 @@ class visualize:
             plt.clim(-60, 40)
             cbar = plt.colorbar()
             checkDirExists(self.input_config.visual_direct)
-            plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f_SpatialPattern' % (self.input_config.spec_out, t)))
+            plt.savefig(os.path.join(self.input_config.visual_direct,
+                                     u'%s_t=%.5f_SpatialPattern' % (self.input_config.spec_out, t)))
             del cbar
 
     def plotTimeSeries(self):
-        data=self.input_config.inputTimeSeries()
-#        print data
-        column=np.size(data[0,:])
+        data = self.input_config.inputTimeSeries()
+        #        print data
+        column = np.size(data[0, :])
         plt.clf()
         plt.subplot(211)
-        plt.plot(data[20000:,0],data[20000:,1])
+        plt.plot(data[20000:, 0], data[20000:, 1])
         plt.title(self.plot_title)
         plt.ylabel(u'type I voltage(mV)')
         plt.subplot(212)
-        plt.plot(data[20000:,0],data[20000:,column/2+1])
+        plt.plot(data[20000:, 0], data[20000:, column / 2 + 1])
         plt.ylabel(u'type II voltage(mV)')
         plt.xlabel(u'time(ms)')
 
-#        plt.title(self.plot_title)
+        #        plt.title(self.plot_title)
         checkDirExists(self.Visualdirect)
-        plt.savefig(os.path.join(self.Visualdirect,u'%s_TimeSeries.png'%(self.coupleAndNoise)))
+        plt.savefig(os.path.join(self.Visualdirect, u'%s_TimeSeries.png' % (self.coupleAndNoise)))
 
     def plotFiringRate(self, key, value, xlabel=""):
         plt.clf()
@@ -106,13 +108,13 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key,xlabel)
+        makeXLabel(key, xlabel)
         plt.ylabel(u'Population Firing Rate(Hz)')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRate'%midname))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRate' % midname))
 
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRate.txt'%midname),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRate.txt' % midname),
                    data)
 
     def plotFiringRateForIandII(self, key, value, xlabel=""):
@@ -129,17 +131,19 @@ class visualize:
         plt.plot(value, quant1)
         plt.plot(value, quant2)
         #        plt.title('(a)')
-        #todo legend
+        # todo legend
         plt.legend(loc='best')
 
-        makeXLabel(key,xlabel)
+        makeXLabel(key, xlabel)
         plt.ylabel(u'Population Firing Rate(Hz)')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII'%midname))
+        plt.savefig(
+            os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII' % midname))
 
         data = listTupleToArray(value, quant1, quant2)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII.txt'%midname),
-                   data)
+        np.savetxt(
+            os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII.txt' % midname),
+            data)
 
     def plotCV(self, key, value, xlabel=""):
         plt.clf()
@@ -153,13 +157,13 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key,xlabel)
+        makeXLabel(key, xlabel)
         plt.ylabel(u'Coherence variance(Hz)')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CV'%midname))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CV' % midname))
 
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CV.txt'%midname),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CV.txt' % midname),
                    data)
 
     def plotCVForIandII(self, key, value, xlabel=""):
@@ -176,16 +180,16 @@ class visualize:
         plt.plot(value, quant1)
         plt.plot(value, quant2)
         #        plt.title('(a)')
-        #todo legend
+        # todo legend
         plt.legend(loc='best')
 
-        makeXLabel(key,xlabel)
+        makeXLabel(key, xlabel)
         plt.ylabel(u'coherence variance')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CVForIandII'%midname))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CVForIandII' % midname))
 
         data = listTupleToArray(value, quant1, quant2)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CVForIandII.txt'%midname),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CVForIandII.txt' % midname),
                    data)
 
     def plotPhaseOrder(self, key, value, xlabel=""):
@@ -200,12 +204,12 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key,xlabel)
+        makeXLabel(key, xlabel)
         plt.ylabel(u'sychronization index')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_PhaseOrder'%midname))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_PhaseOrder' % midname))
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.txt'%midname),
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.txt' % midname),
                    data)
 
     def plotNetISI(self, key, value, xlabel=""):
@@ -220,10 +224,10 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key,xlabel)
+        makeXLabel(key, xlabel)
         plt.ylabel(u'Population average isi')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_NetISI'%midname))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_NetISI' % midname))
         data = listTupleToArray(value, quant)
-        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.txt')%midname,
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.txt') % midname,
                    data)

@@ -11,8 +11,7 @@ class input:
         self.visual_direct = ""
         self.spec = ""
 
-
-    def updateConfig(self, file_configure):
+    def set_file_configure(self, file_configure):
         self.file_configure = file_configure
 
     def updateDirect(self):
@@ -47,7 +46,7 @@ class input:
     # input processed data
     def inputAutoCorrelation(self, time):
         self.updateDirect()
-        #TODO
+        # TODO
         filename = os.path.join(self.pp_direct, u'%s_AC.dat' % (self.spec, time))
         data = np.loadtxt(filename)
         return data

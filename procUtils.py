@@ -9,7 +9,10 @@ class process:
     def __init__(self, input_config):
         self.input_config = input_config
 
-    def averAutoCorr(self, time_array=time_array):
+    def set_input_config(self,input_self):
+        self.input_config = input_self
+
+    def averAutoCorr(self, time_array):
         sumAutoCorr = None
         for time in time_array:
             matrix = self.input_config.inputSpiralWave(time)
