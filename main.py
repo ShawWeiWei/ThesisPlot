@@ -21,7 +21,7 @@ if __name__ == "__main__":
     input_util = input(file_conf)
     plot_util = visualize(input_util)
     proc_util = process(input_util)
-    for ml1 in aML1:
+    for ml1 in aML1[-12:]:
         file_conf.set_p_ml1(ml1)
         for gc_exc in aGc:
             file_conf.set_gc_exc(gc_exc)

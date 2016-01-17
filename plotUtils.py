@@ -63,6 +63,8 @@ class visualize:
         # plt.title(self.plot_title)
         checkDirExists(self.input_config)
         animation.write_gif(os.path.join(self.input_config.visual_direct, u'%s.gif' % self.input_config.spec), fps=20)
+        del animation
+        del data[:]
         bar = plt.colorbar()
         del bar
 
