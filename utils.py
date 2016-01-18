@@ -35,7 +35,7 @@ def replaceKey(str, key):
 
 def composeFileName(key, input_config):
     filename = input_config.file_configure.conn + '_' + input_config.file_configure.compos + '_' + \
-               input_config.file_configure.spec_out
+               input_config.file_configure.spec
     if key == "gc_exc" or key == "gc_inh" or key == "v_exc" or key == "v_inh" or key == "threshold" or key == 'p':
         return replaceKey(filename, key)
     elif key == "p_ml1":

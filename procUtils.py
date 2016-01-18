@@ -33,6 +33,7 @@ class process:
                 sumSSF = np.square(np.abs(np.fft.fft2(matrix)))
             else:
                 sumSSF = sumSSF + np.square(np.abs(np.fft.fft2(matrix)))
+            del matrix
         rawSSF = sumSSF/len(time_array)
         averSSF = procSSF(rawSSF)
         checkDirExists(self.input_config)
@@ -51,6 +52,7 @@ class process:
         ls = makeFFT2List(data)
         checkDirExists(self.input_config)
         np.savetxt(os.path.join(self.input_config.pp_direct, u'%s_AverSSFList.dat' % self.input_config.spec), ls)
+
 
 
 

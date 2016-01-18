@@ -65,11 +65,11 @@ class visualize:
         animation.write_gif(os.path.join(self.input_config.visual_direct, u'%s.gif' % self.input_config.spec), fps=20)
         del animation
         del data[:]
-        bar = plt.colorbar()
-        del bar
+        plt.close()
 
     def plotSpiralWaves(self, listoftime=time_array):
-        filter_array = listoftime[-25:]  # filter(lambda x:int(x)>4500,time_array)    
+        filter_array = listoftime[-25:]  # filter(lambda x:int(x)>4500,time_array)
+        fig = plt.figure()
         for t in filter_array:
             data = self.input_config.inputSpiralWave(t)
             plt.clf()
@@ -82,7 +82,9 @@ class visualize:
             checkDirExists(self.input_config)
             plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f_SpatialPattern.png' \
                                      % (self.input_config.spec, t)))
+            del data
             del cbar
+        plt.close()
 
     def plotTimeSeries(self):
         data = self.input_config.inputTimeSeries()
@@ -112,6 +114,7 @@ class visualize:
 
     def plotAverSSFList(self):
         data = self.input_config.inputAverSSFList()
+        fig = plt.figure()
         plt.clf()
         plt.plot(data)
         plt.xlabel('radius')
@@ -120,9 +123,11 @@ class visualize:
         checkDirExists(self.input_config)
         plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverSSFList.png' % self.input_config.spec),
                     format='png')
+        del fig
 
     def plotAverAutoCorrList(self):
         data = self.input_config.inputAverAutoCorrList()
+        fig = plt.figure()
         plt.clf()
         plt.plot(data)
         plt.xlabel('radius')
@@ -130,6 +135,7 @@ class visualize:
         checkDirExists(self.input_config)
         plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverAutoCorrList.png' % self.input_config.spec),
                     format='png')
+        del fig
 
     ###The composite operation
     def plotFiringRate(self, key, value, xlabel=""):
@@ -144,7 +150,7 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'Population Firing Rate(Hz)')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRate' % midname))
@@ -170,7 +176,7 @@ class visualize:
         # todo legend
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'Population Firing Rate(Hz)')
         midname = composeFileName(key, self.input_config)
         plt.savefig(
@@ -192,10 +198,10 @@ class visualize:
         plt.plot(value, quant)
         #        plt.title('(a)')
         plt.legend(loc='best')
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'Population average isi')
         midname = composeFileName(key, self.input_config)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_NetISI' % midname))
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_NetISI.tiff' % midname))
         data = listTupleToArray(value, quant)
         np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.dat') % midname,
                    data)
@@ -217,7 +223,7 @@ class visualize:
         # todo legend
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'Population average isi')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_NetISIForIandII' % midname))
@@ -238,7 +244,7 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'Coherence variance(Hz)')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CV' % midname))
@@ -263,7 +269,7 @@ class visualize:
         # todo legend
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'coherence variance')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_CVForIandII.tiff' % midname))
@@ -283,7 +289,7 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'sychronization index')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.tiff' % midname))
@@ -306,7 +312,7 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'AutoCorrelation function SNR')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_AutoCorrSNR.tiff' % midname))
@@ -330,7 +336,7 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        makeXLabel(key, xlabel)
+        plt.xlabel(makeXLabel(key, xlabel))
         plt.ylabel(u'Spatial structural  function SNR')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_SSFSNR.tiff' % midname))
