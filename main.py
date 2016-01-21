@@ -38,7 +38,7 @@ def ExcitatorySquare():
             plot_util.plotAverAutoCorrList()
             plot_util.plotAverSSFList()
 
-def inhibitoryPlotAndProc():
+def InhibitorySquare():
     file_conf = InhibitoryCouple(45,54,0.27,0.27,36,-45,-25,"Square")#ExcitoryCouple(50, 0.27, 36, -25, "Square")
     aGc =  [0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32]#[0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32]
     input_util = input(file_conf)
