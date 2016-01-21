@@ -5,10 +5,10 @@ test_time_array = np.linspace(3020, 4980, 99)
 ultimate_time_array = np.linspace(5020, 7980, 149)
 time_array = ultimate_time_array
 # FILE PREFIX
-Raw = u'F:\\output'#'/Users/yes'#
-PP = u'F:\\verification\\PP'
-Visual = u'F:\\verification\\Visual'
-Thesis = u'F:\\Graduation Thesis\\FigureForThesis'
+Raw = u'G:\\output'#'/Users/yes'#
+PP = u'G:\\verification\\PP'
+Visual = u'G:\\verification\\Visual'
+Thesis = u'G:\\Graduation Thesis\\FigureForThesis'
 
 FUNC_SET_PREFIX = "set_"
 
