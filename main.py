@@ -18,7 +18,7 @@ def com(averSSF):
     return SSS
 
 
-def singlePlotAndProc():
+def ExcitatorySquare():
     file_conf = ExcitoryCouple(50, 0.27, 36, -25, "Square")
     aGc = [0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32]
     input_util = input(file_conf)
