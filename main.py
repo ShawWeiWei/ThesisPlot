@@ -39,7 +39,7 @@ def ExcitatorySparser():
     input_util = input(file_conf)
     plot_util = visualize(input_util)
     proc_util = process(input_util)
-    aML1 = [1, 25, 45, 99]
+    aML1 = [45, 99]
     for ml1 in aML1:
         file_conf.set_p_ml1(ml1)
         for p in aP:
