@@ -5,6 +5,7 @@ mpl.rcParams['lines.linewidth']=2
 #mpl.rcParams['lines.style']='-'
 mpl.rcParams['axes.color_cycle']='black'
 
+plotCharacter=['k-','k--','k-.','k:','k*-']
 
 #text
 mpl.rcParams['text.color']='black'

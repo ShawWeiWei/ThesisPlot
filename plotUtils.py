@@ -10,6 +10,7 @@ from moviepy.video.io.bindings import mplfig_to_npimage
 from Constants import *
 from plotACofRadius import firstPeakAC, firstPeakFFT2
 from utils import *
+from plotsetting import *
 
 def meanOfList(list):
     return np.mean(list)
@@ -213,6 +214,8 @@ class visualize:
         fig = plt.figure()
         plt.clf()
         func1 = self._getFileConfFunc(key1)
+
+        plot_line_index = 0
         if not key2==None:
             if not len(indicators) == 1:
                 raise ValueError('If exists key2, indicators should not have two or more elements')
@@ -222,12 +225,14 @@ class visualize:
                 for indicator in indicators:
                     quant = []
                     for val1 in value1:
-                        None
-                        # func1(val1)
-                        # data = self.proc_indicator[indicator][0]()
-                        # quant.append(self.proc_indicator[indicator][1](data))
+                         func1(val1)
+                         data = self.proc_indicator[indicator][0]()
+                         quant.append(self.proc_indicator[indicator][1](data))
                     #todo legend
- #                   plt.plot(value1,quant)
+                    plt.plot(value1,quant,plotCharacter[plot_line_index])
+                    plot_line_index+=1
+
+            plt.legend(loc='best',labels =['s','s'])
 
         else:
             for indicator in indicators:
@@ -237,7 +242,13 @@ class visualize:
                     data = self.proc_indicator[indicator][0]()
                     quant.append(self.proc_indicator[indicator][1](data))
                 #todo legend
-                plt.plot(value1, quant)
+                plt.plot(value1, quant,plotCharacter[plot_line_index])
+                plot_line_index+=1
+            if len(indicators) > 1:
+                labels = []
+                for indicator in indicators:
+                    labels.append(self.proc_indicator[indicator][4])
+                plt.legend(loc='best',labels =labels)
 
         #todo title and legend
         #plt.title('(a)')
