@@ -3,7 +3,7 @@ import numpy as np
 aML1 = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99]
 test_time_array = np.linspace(3020, 4980, 99)
 ultimate_time_array = np.linspace(5020, 7980, 149)
-time_array = ultimate_time_array
+time_array = np.linspace(3020,5980,149)#ultimate_time_array
 # FILE PREFIX
 Raw = u'G:\\output'#'/Users/yes'#
 PP = u'G:\\verification\\PP'

@@ -202,7 +202,7 @@ def plotGenerateSW():
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
     # plt.title('p = 0')
-    plt.text(0,120,'p = 0',ha = 'center', va = 'center')
+    plt.text(0,130,'(a)',ha = 'center', va = 'center')
 
     plt.subplot(132)
     A = makeWSSmallWorld(0.5)
@@ -216,7 +216,7 @@ def plotGenerateSW():
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
     # plt.title('p = 0.5')
-    plt.text(0,120,'p = 0.5',ha = 'center', va = 'center')
+    plt.text(0,130,'(b)',ha = 'center', va = 'center')
 
     plt.subplot(133)
     A = makeWSSmallWorld(1)
@@ -230,7 +230,7 @@ def plotGenerateSW():
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
     # plt.title('p = 1')
-    plt.text(0,120,'p = 1',ha = 'center', va = 'center')
+    plt.text(0,130,'(c)',ha = 'center', va = 'center')
 
     plt.savefig('Generate WS small world.tiff',dpi = 400)
 
@@ -248,7 +248,7 @@ def plotGenerateNW():
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
     # plt.title('p = 0')
-    plt.text(0,120,'p = 0',ha = 'center', va = 'center')
+    plt.text(0,130,'(a)',ha = 'center', va = 'center')
 
     plt.subplot(132)
     A = makeNWSmallWorld(0.5)
@@ -262,7 +262,7 @@ def plotGenerateNW():
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
     # plt.title('p = 0.5')
-    plt.text(0,120,'p = 0.5',ha = 'center', va = 'center')
+    plt.text(0,130,'(b)',ha = 'center', va = 'center')
 
 
     plt.subplot(133)
@@ -277,7 +277,7 @@ def plotGenerateNW():
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
     # plt.title('p = 1')
-    plt.text(0,120,'p = 1',ha = 'center', va = 'center')
+    plt.text(0,130,'(c)',ha = 'center', va = 'center')
 
     plt.savefig('Generate NW small world.tiff',dpi = 400)
 
@@ -354,13 +354,13 @@ def plotGenerateSparser():
     plt.savefig('Generate Sparser.tiff',dpi = 400)
 if __name__ == '__main__':
     #plt.show()
-    # plotSquare()
-    # plotRegular()
-    # plotFullConnectedNetwork()
-    # plotStarCoupledNetwork()
+    #plotSquare()
+    #plotRegular()
+    #plotFullConnectedNetwork()
+    #plotStarCoupledNetwork()
     #plotFullConnectedNetwork()
     #plotSmallWorld(0.2)
     #plotGenerateSW()
-    #plotGenerateNW()
-    plotGenerateSparser()
+    plotGenerateNW()
+    #plotGenerateSparser()
 

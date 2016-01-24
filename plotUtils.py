@@ -10,11 +10,25 @@ from moviepy.video.io.bindings import mplfig_to_npimage
 from Constants import *
 from plotACofRadius import firstPeakAC, firstPeakFFT2
 from utils import *
-import plotsetting
+
+def meanOfList(list):
+    return np.mean(list)
 
 class visualize:
     def __init__(self, input_config):
         self.input_config = input_config
+        #0.input_method 1.proc_method 2. ylabel 3.filename_postfix 4 legend(optional)
+        self.proc_indicator={
+            'NetISI':[self.input_config.inputAverISI,meanOfList,'Average ISI of Network','NetISI'],
+            'ISI1':[self.input_config.inputAverISIType1,meanOfList,'Average ISI of different types','NetISIForIAndII','Type I'],
+            'ISI2':[self.input_config.inputAverISIType2,meanOfList,'Average ISI of different types','NetISIForIAndII','Type II'],
+            'CV':[self.input_config.inputCV,meanOfList,'Average CV of Network','NetCV'],
+            'CV1':[self.input_config.inputCVType1,meanOfList,'Average CV of different types','NetCVForIAndII','Type I'],
+            'CV2':[self.input_config.inputCVType2,meanOfList,'Average CV of different types','NetCVForIAndII','Type II'],
+            'PhaseOrder':[self.input_config.inputPhaseAmplitude,meanOfList,'The synchronization index','PhaseOrder'],
+            'AutoCorrSNR':[self.input_config.inputAverAutoCorrList,firstPeakAC,'SNR of AutoCorrelation','AutoCorrSNR'],
+            'SSFSNR':[self.input_config.inputAverSSFList,firstPeakFFT2,'SNR of Spatial Structural Function','SSFSNR']
+        }
 
     def set_input_config(self, input_config):
         self.input_config = input_config
@@ -67,6 +81,41 @@ class visualize:
         del data[:]
         plt.close()
 
+    def contourGifOfSeed(self,seed):
+        duration = 6
+        size = len(time_array)
+        fig = plt.figure()
+
+        # DRAW A FIGURE WITH MATPLOTLIB
+        def make_frame(t):
+            plt.clf()
+
+            im = plt.contourf(data[int(t * size / duration)])
+            plt.clim(-60, 40)
+            plt.colorbar()
+
+            def setvisible(self, vis):
+                for c in self.collections: c.set_visible(vis)
+
+            im.set_visible = types.MethodType(setvisible, im)
+            im.axes = plt.gca()
+
+            plt.title(self.input_config.plot_title)
+            return mplfig_to_npimage(fig)
+
+        data = []
+        for time in time_array:
+            d = self.input_config.inputSpiralWaveOfSeed(seed,time)
+            data.append(d)
+        # ANIMATE WITH MOVIEPY (UPDATE THE CURVE FOR EACH t). MAKE A GIF.
+        animation = mpy.VideoClip(make_frame, duration=duration)
+        # plt.title(self.plot_title)
+        checkDirExists(self.input_config)
+        animation.write_gif(os.path.join(self.input_config.visual_direct, u'%s_Seed=%d.gif' % (self.input_config.spec,seed)), fps=20)
+        del animation
+        del data[:]
+        plt.close()
+
     def plotSpiralWaves(self, listoftime=time_array):
         filter_array = listoftime[-25:]  # filter(lambda x:int(x)>4500,time_array)
         fig = plt.figure()
@@ -78,7 +127,7 @@ class visualize:
             plt.ylabel('Network Row Index')
             plt.clim(-60, 40)
             cbar = plt.colorbar()
-            #plt.show()
+            # plt.show()
             checkDirExists(self.input_config)
             plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f_SpatialPattern.png' \
                                      % (self.input_config.spec, t)))
@@ -90,6 +139,7 @@ class visualize:
         data = self.input_config.inputTimeSeries()
         #        print data
         column = np.size(data[0, :])
+        fig = plt.figure()
         plt.clf()
         plt.subplot(211)
         plt.plot(data[20000:, 0], data[20000:, 1])
@@ -103,6 +153,7 @@ class visualize:
         checkDirExists(self.input_config)
         plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_TimeSeries.tiff' % self.input_config.spec),
                     format='png')
+        plt.close()
 
     def plotAverSSF(self):
         # todo
@@ -123,7 +174,7 @@ class visualize:
         checkDirExists(self.input_config)
         plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverSSFList.png' % self.input_config.spec),
                     format='png')
-        del fig
+        plt.close()
 
     def plotAverAutoCorrList(self):
         data = self.input_config.inputAverAutoCorrList()
@@ -135,10 +186,78 @@ class visualize:
         checkDirExists(self.input_config)
         plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverAutoCorrList.png' % self.input_config.spec),
                     format='png')
-        del fig
+        plt.close()
+
+    def plotSquareForLowISI(self):
+        data = self.input_config.inputAverISI()
+        sorted_index = sorted(range(len(data)), key=lambda k: data[k])
+        num_of_lowest = 30
+        dim = int(np.sqrt(len(data)) + 0.5)
+        fig = plt.figure()
+        plt.clf()
+        for index in range(num_of_lowest):
+            plt.scatter(sorted_index[index] % dim, sorted_index[index] / dim, s=1)
+        plt.text(20,-15,'HighISI=%.5f_LowISI=%.5f'%(np.max(data),np.min(data)),color='r')
+
+        plt.xlim([-1, dim])
+        plt.ylim([-1, dim])
+        plt.title(self.input_config.plot_title)
+        checkDirExists(self.input_config)
+        plt.savefig(os.path.join(self.input_config.visual_direct, '%s_LowISILocation.png' % self.input_config.spec),
+                    format='png')
+        plt.close()
 
     ###The composite operation
+    def plotIndicator(self, key1,value1, title="",key2=None,value2=None,*indicators):
+
+        fig = plt.figure()
+        plt.clf()
+        func1 = self._getFileConfFunc(key1)
+        if not key2==None:
+            if not len(indicators) == 1:
+                raise ValueError('If exists key2, indicators should not have two or more elements')
+            func2 = self._getFileConfFunc(key2)
+            for val2 in value2:
+                func2(val2)
+                for indicator in indicators:
+                    quant = []
+                    for val1 in value1:
+                        None
+                        # func1(val1)
+                        # data = self.proc_indicator[indicator][0]()
+                        # quant.append(self.proc_indicator[indicator][1](data))
+                    #todo legend
+ #                   plt.plot(value1,quant)
+
+        else:
+            for indicator in indicators:
+                quant = []
+                for val1 in value1:
+                    func1(val1)
+                    data = self.proc_indicator[indicator][0]()
+                    quant.append(self.proc_indicator[indicator][1](data))
+                #todo legend
+                plt.plot(value1, quant)
+
+        #todo title and legend
+        #plt.title('(a)')
+        #plt.legend(loc='best')
+
+        plt.xlabel(makeXLabel(key1))
+        plt.ylabel(self.proc_indicator[indicators[0]][2])
+        if not key2 == None:
+            midname = composeFileName(self.input_config,key1,key2)
+        else:
+            midname = composeFileName(self.input_config,key1)
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_%s.tiff' % (midname,\
+                                                            self.proc_indicator[indicators[0]][3])))
+        plt.close()
+        # data = listTupleToArray(value, quant)
+        # np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRate.dat' % midname),
+        #            data)
+
     def plotFiringRate(self, key, value, xlabel=""):
+        fig = plt.figure()
         plt.clf()
         func = self._getFileConfFunc(key)
         quant = []
@@ -154,12 +273,13 @@ class visualize:
         plt.ylabel(u'Population Firing Rate(Hz)')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRate' % midname))
-
+        plt.close()
         data = listTupleToArray(value, quant)
         np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRate.dat' % midname),
                    data)
 
     def plotFiringRateForIandII(self, key, value, xlabel=""):
+        fig = plt.figure()
         plt.clf()
         func = self._getFileConfFunc(key)
         quant1 = []
@@ -181,11 +301,11 @@ class visualize:
         midname = composeFileName(key, self.input_config)
         plt.savefig(
                 os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII' % midname))
-
+        plt.close()
         data = listTupleToArray(value, quant1, quant2)
         np.savetxt(
-            os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII.dat' % midname),
-            data)
+                os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRateForIandII.dat' % midname),
+                data)
 
     def plotNetISI(self, key, value, xlabel=""):
         plt.clf()

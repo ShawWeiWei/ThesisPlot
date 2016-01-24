@@ -12,7 +12,7 @@ mpl.rcParams['text.color']='black'
 
 #axes
 mpl.rcParams['axes.linewidth']=1.5
-mpl.rcParams['axes.titlesize']=18#'large'
+mpl.rcParams['axes.titlesize']=25#'large'
 mpl.rcParams['axes.labelsize']=18#'large'
 
 

@@ -1,6 +1,8 @@
-from Constants import *
 import os
+
 import numpy as np
+
+from Constants import *
 
 
 class input:
@@ -10,6 +12,7 @@ class input:
         self.pp_direct = ""
         self.visual_direct = ""
         self.spec = ""
+        self.plot_title = ""
 
     def set_file_configure(self, file_configure):
         self.file_configure = file_configure
@@ -43,6 +46,12 @@ class input:
         data = np.loadtxt(filename)
         return data
 
+    def inputSpiralWaveOfSeed(self, seed, time):
+        self.updateDirect()
+        filename = os.path.join(self.raw_direct, u'%s_Seed=%d_t=%.5f.dat' % (self.spec, seed, time))
+        data = np.loadtxt(filename)
+        return data
+
     # input processed data
     def inputAverAutoCorr(self):
         self.updateDirect()
@@ -52,7 +61,7 @@ class input:
 
     def inputAverAutoCorrList(self):
         self.updateDirect()
-        filename = os.path.join(self.pp_direct, u'%s_AverAutoCorrList.dat'%self.spec)
+        filename = os.path.join(self.pp_direct, u'%s_AverAutoCorrList.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 
@@ -64,7 +73,7 @@ class input:
 
     def inputAverSSFList(self):
         self.updateDirect()
-        filename = os.path.join(self.pp_direct, u'%s_AverSSFList.dat'%self.spec)
+        filename = os.path.join(self.pp_direct, u'%s_AverSSFList.dat' % self.spec)
         data = np.loadtxt(filename)
         return data
 

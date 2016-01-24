@@ -33,9 +33,13 @@ def replaceKey(str, key):
     return str[0:pre + 1] + "(variant)" + str[pre + post:]
 
 
-def composeFileName(key, input_config):
+def composeFileName(input_config,*keys):
     filename = input_config.file_configure.conn + '_' + input_config.file_configure.compos + '_' + \
                input_config.file_configure.spec
+    return reduce(judgeKey,keys,filename)
+
+
+def judgeKey(filename,key):
     if key == "gc_exc" or key == "gc_inh" or key == "v_exc" or key == "v_inh" or key == "threshold" or key == 'p':
         return replaceKey(filename, key)
     elif key == "p_ml1":
@@ -44,7 +48,6 @@ def composeFileName(key, input_config):
         return replaceKey(filename, "pML2")
     else:
         raise ValueError
-
 
 def autoCorr(matrix):
     averagePotential = np.mean(matrix)
@@ -67,7 +70,7 @@ def procSSF(averSSF):
     return SSS
 
 
-def _makeXLabel(key):
+def makeXLabel(key):
     if key == "gc_exc":
         return "excitatory coupling intensity"
     elif key == "gc_inh":
@@ -87,8 +90,4 @@ def _makeXLabel(key):
     else:
         raise ValueError
 
-def makeXLabel(key, xlabel):
-    if xlabel == "":
-        return _makeXLabel(key)
-    else:
-        return xlabel
+
