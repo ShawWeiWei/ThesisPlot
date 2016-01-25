@@ -80,7 +80,7 @@ class ExcitoryCouple:
 
 # @implementer(fileconf)
 class InhibitoryCouple:
-    def __init__(self, p_ml1, p_ml2, gc_exc, gc_inh, v_exc, v_inh, threshold, con, p=0):
+    def __init__(self, p_ml1, p_inh, gc_exc, gc_inh, v_exc, v_inh, threshold, con, p=0):
         self.coupleType = "CoupleWithInhibition"
         self.conn = ""
         self.compos = ""
@@ -91,7 +91,8 @@ class InhibitoryCouple:
         self.p = p
 
         self.p_ml1 = p_ml1
-        self.p_ml2 = p_ml2
+        self.p_inh = p_inh
+        self.p_ml2 = 100 - p_ml1 - p_inh
 
         self.gc_exc = gc_exc
         self.gc_inh = gc_inh
@@ -103,14 +104,11 @@ class InhibitoryCouple:
 
     def set_p_ml1(self, p_ml1):
         self.p_ml1 = p_ml1
-        self.update()
-
-    def set_p_ml2(self, p_ml2):
-        self.p_ml2 = p_ml2
+        self.p_ml2 = 100 - p_ml1 - self.p_inh
         self.update()
 
     def set_p_inh(self, p_inh):
-        self.p_ml2 = 100 - self.p_ml1 - p_inh
+        self.p_inh = p_inh
         self.update()
 
     def set_con(self, con):

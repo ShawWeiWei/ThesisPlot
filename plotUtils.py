@@ -216,23 +216,28 @@ class visualize:
         func1 = self._getFileConfFunc(key1)
 
         plot_line_index = 0
+
         if not key2==None:
             if not len(indicators) == 1:
                 raise ValueError('If exists key2, indicators should not have two or more elements')
             func2 = self._getFileConfFunc(key2)
             for val2 in value2:
                 func2(val2)
-                for indicator in indicators:
-                    quant = []
-                    for val1 in value1:
-                         func1(val1)
-                         data = self.proc_indicator[indicator][0]()
-                         quant.append(self.proc_indicator[indicator][1](data))
-                    #todo legend
-                    plt.plot(value1,quant,plotCharacter[plot_line_index])
-                    plot_line_index+=1
+                quant = []
+                if key2 == 'p_inh' and key1 == 'p_ml1':
+                    value1 = conf[val2]
+                for val1 in value1:
+                     func1(val1)
+                     data = self.proc_indicator[indicators[0]][0]()
+                     quant.append(self.proc_indicator[indicators[0]][1](data))
+                #todo legend
+                plt.plot(value1,quant,plotCharacter[plot_line_index])
+                plot_line_index+=1
 
-            plt.legend(loc='best',labels =['s','s'])
+            labels = []
+            for val2 in value2:
+                    labels.append(keyToLegend[key2][0] + str(val2) + keyToLegend[key2][1])
+            plt.legend(loc='best',labels =labels)
 
         else:
             for indicator in indicators:
@@ -251,8 +256,7 @@ class visualize:
                 plt.legend(loc='best',labels =labels)
 
         #todo title and legend
-        #plt.title('(a)')
-        #plt.legend(loc='best')
+        plt.title(title)
 
         plt.xlabel(makeXLabel(key1))
         plt.ylabel(self.proc_indicator[indicators[0]][2])
@@ -260,12 +264,10 @@ class visualize:
             midname = composeFileName(self.input_config,key1,key2)
         else:
             midname = composeFileName(self.input_config,key1)
-        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_%s.tiff' % (midname,\
+        plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_%s.png' % (midname,\
                                                             self.proc_indicator[indicators[0]][3])))
         plt.close()
-        # data = listTupleToArray(value, quant)
-        # np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_FiringRate.dat' % midname),
-        #            data)
+
 
     def plotFiringRate(self, key, value, xlabel=""):
         fig = plt.figure()

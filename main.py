@@ -73,13 +73,7 @@ def ExcitatorySparser():
             plot_util.plotAverSSFList()
 
 
-conf = [
-    [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
-    [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 98],
-    [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 97],
-    [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 96],
-    [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
-]
+
 
 
 def InhibitorySquare():
@@ -91,7 +85,7 @@ def InhibitorySquare():
     plot_util = visualize(input_util)
     proc_util = process(input_util)
     aML1 = [50]
-    aInh = [1, 2, 3, 4, 0]
+    aInh = [5,6,7]
     for inh in aInh:
         for ml1 in conf[inh]:
             file_conf.set_p_ml1(ml1)
@@ -149,3 +143,4 @@ if __name__ == "__main__":
     plot_util = visualize(input_util)
     proc_util = process(input_util)
     plot_util.plotIndicator('p_ml1',aML1,"",'gc_exc',[0.23,0.24,0.25],'CV')
+    #InhibitorySquare()
