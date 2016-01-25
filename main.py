@@ -31,12 +31,14 @@ def ExcitatorySquare():
     aGc = [0.27]#[0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32]
     input_util = input(file_conf)
     plot_util = visualize(input_util)
+    plot_util.plotIndicator('p_ml1',aML1,"(c)",'gc_exc',[0.22,0.27,0.32],'PhaseOrder')
     proc_util = process(input_util)
-    aML1 = [16,19,20,21,23]
-    for ml1 in aML1:
-        file_conf.set_p_ml1(ml1)
-        for gc_exc in aGc:
-            file_conf.set_gc_exc(gc_exc)
+    # aML1=[1]
+    # for i,ml1 in enumerate(aML1):
+    #     file_conf.set_p_ml1(ml1)
+    #     for gc_exc in aGc:
+    #         file_conf.set_gc_exc(gc_exc)
+           # plot_util.plotSpiralWave(dictExcitatorySquare_0_27[ml1],title_list[i])
             # plot_util.contourGif()
             # plot_util.plotSpiralWaves()
             # proc_util.averSSF()
@@ -45,8 +47,7 @@ def ExcitatorySquare():
             # proc_util.averAutoCorrList()
             # plot_util.plotAverAutoCorrList()
             # plot_util.plotAverSSFList()
-            plot_util.plotSquareForLowISI()
-
+            # plot_util.plotSquareForLowISI()
 
 def ExcitatorySparser():
     file_conf = ExcitoryCouple(45, 0.27, 36, -25,
@@ -72,10 +73,6 @@ def ExcitatorySparser():
             plot_util.plotAverAutoCorrList()
             plot_util.plotAverSSFList()
 
-
-
-
-
 def InhibitorySquare():
     file_conf = InhibitoryCouple(45, 54, 0.27, 0.27, 36, -45, -25,
                                  "Square")  # ExcitoryCouple(50, 0.27, 36, -25, "Square")
@@ -99,16 +96,6 @@ def InhibitorySquare():
             # plot_util.plotAverAutoCorrList()
             # plot_util.plotAverSSFList()
 
-
-confSparser = [
-    [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99],
-    [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 98],
-    [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 97],
-    [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 96],
-    [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95]
-]
-
-
 def InhibitorySparser():
     file_conf = InhibitoryCouple(45, 54, 0.27, 0.27, 36, -45, -25,
                                  "Sparser")  # ExcitoryCouple(50, 0.27, 36, -25, "Square")
@@ -121,7 +108,7 @@ def InhibitorySparser():
     aML1 = [50]
     aInh = [4]
     for inh in aInh:
-        for ml1 in confSparser[inh]:
+        for ml1 in conf[inh]:
             file_conf.set_p_ml1(ml1)
             file_conf.set_p_ml2(100 - ml1 - inh)
             for p in aP:
@@ -143,4 +130,4 @@ if __name__ == "__main__":
     # plot_util = visualize(input_util)
     # proc_util = process(input_util)
     # plot_util.plotIndicator('p_ml1',aML1,"",'gc_exc',[0.23,0.24,0.25],'CV')
-    InhibitorySquare()
+    ExcitatorySquare()

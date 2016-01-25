@@ -15,6 +15,8 @@ from plotsetting import *
 def meanOfList(list):
     return np.mean(list)
 
+def firingRate(list):
+    return 1000.0 * np.mean(np.reciprocal(list))
 class visualize:
     def __init__(self, input_config):
         self.input_config = input_config
@@ -23,6 +25,9 @@ class visualize:
             'NetISI':[self.input_config.inputAverISI,meanOfList,'Average ISI of Network','NetISI'],
             'ISI1':[self.input_config.inputAverISIType1,meanOfList,'Average ISI of different types','NetISIForIAndII','Type I'],
             'ISI2':[self.input_config.inputAverISIType2,meanOfList,'Average ISI of different types','NetISIForIAndII','Type II'],
+            'Fre':[self.input_config.inputAverISI,firingRate,'average frequency of network','FiringRate'],
+            'Fre1':[self.input_config.inputAverISIType1,firingRate,'average frequency of different types','FiringRateForIAndII','Type I'],
+            'Fre2':[self.input_config.inputAverISIType2,firingRate,'average frequency of different types','FiringRateForIAndII','Type II'],
             'CV':[self.input_config.inputCV,meanOfList,'Average CV of Network','NetCV'],
             'CV1':[self.input_config.inputCVType1,meanOfList,'Average CV of different types','NetCVForIAndII','Type I'],
             'CV2':[self.input_config.inputCVType2,meanOfList,'Average CV of different types','NetCVForIAndII','Type II'],
@@ -116,7 +121,31 @@ class visualize:
         del animation
         del data[:]
         plt.close()
+    def plotSpiralWave(self,time,title):
+        data = self.input_config.inputSpiralWave(time)
+        plt.clf()
+        plt.contourf(data)
+        plt.xlabel('Network Column Index')
+        plt.ylabel('Network Row Index')
+        plt.xticks([0,32,64,96,127])
+        plt.yticks([0,32,64,96,127])
+        ax = plt.gcf().gca()
+        a=ax.get_xticks().tolist()
+        a[0]='1'
+        a[4]='128'
+        ax.set_xticklabels(a)
+        ax.set_yticklabels(a)
+        plt.title(self.input_config.plot_title)
+        plt.clim(-60, 40)
+        cbar = plt.colorbar()
+        plt.title(title,y=1.02)
+        plt.subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
 
+        checkDirExists(self.input_config)
+        plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f_SpatialPattern.tiff' \
+                                 % (self.input_config.spec, time)))
+        del data
+        del cbar
     def plotSpiralWaves(self, listoftime=time_array):
         filter_array = listoftime[-25:]  # filter(lambda x:int(x)>4500,time_array)
         plt.clf()
@@ -257,8 +286,8 @@ class visualize:
                 plt.legend(loc='best',labels =labels)
 
         #todo title and legend
-        plt.title(title)
-
+        plt.title(title,y = 1.02)
+        plt.subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
         plt.xlabel(makeXLabel(key1))
         plt.ylabel(self.proc_indicator[indicators[0]][2])
         if not key2 == None:
@@ -411,7 +440,7 @@ class visualize:
         data = listTupleToArray(value, quant1, quant2)
         np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_CVForIandII.dat' % midname), data)
 
-    def plotPhaseOrder(self, key, value, xlabel=""):
+    def plotPhaseOrder(self, key, value):
         plt.clf()
         func = self._getFileConfFunc(key)
         quant = []
@@ -423,7 +452,7 @@ class visualize:
         #        plt.title('(a)')
         plt.legend(loc='best')
 
-        plt.xlabel(makeXLabel(key, xlabel))
+        plt.xlabel(makeXLabel(key))
         plt.ylabel(u'sychronization index')
         midname = composeFileName(key, self.input_config)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_PhaseOrder.tiff' % midname))

@@ -4,7 +4,7 @@ from plotsetting import *
 
 mpl.rcParams['lines.linewidth'] = 0.5
 
-marker_size = 15
+marker_size = 7
 color_type = 'black'
 
 N = 16
@@ -282,7 +282,7 @@ def plotGenerateNW():
     plt.savefig('Generate NW small world.tiff',dpi = 400)
 
 def plotGenerateSparser():
-    dim = 6
+    dim = 10
     plt.clf()
     plt.subplot(131)
     for i in range(dim):
@@ -304,7 +304,7 @@ def plotGenerateSparser():
     plt.xlim([-1, dim])
     plt.ylim([-1, dim])
     # plt.title('p = 0')
-    plt.text(2.5,6,'p = 0',ha = 'center', va = 'center')
+    plt.text((float(dim)-1)/2,dim,'(a)',ha = 'center', va = 'center')
     plt.subplot(132)
     p = 0.1
     for i in range(dim):
@@ -326,7 +326,7 @@ def plotGenerateSparser():
     plt.xlim([-1, dim])
     plt.ylim([-1, dim])
     # plt.title('p = 0.5')
-    plt.text(2.5,6,'p = 0.1',ha = 'center', va = 'center')
+    plt.text((float(dim)-1)/2,dim,'(b)',ha = 'center', va = 'center')
 
     plt.subplot(133)
     p = 0.2
@@ -349,7 +349,7 @@ def plotGenerateSparser():
     plt.xlim([-1, dim])
     plt.ylim([-1, dim])
     # plt.title('p = 1')
-    plt.text(2.5,6,'p = 0.2',ha = 'center', va = 'center')
+    plt.text((float(dim)-1)/2,dim,'(c)',ha = 'center', va = 'center')
 
     plt.savefig('Generate Sparser.tiff',dpi = 400)
 if __name__ == '__main__':
@@ -361,6 +361,6 @@ if __name__ == '__main__':
     #plotFullConnectedNetwork()
     #plotSmallWorld(0.2)
     #plotGenerateSW()
-    plotGenerateNW()
-    #plotGenerateSparser()
+    #plotGenerateNW()
+    plotGenerateSparser()
 
