@@ -22,7 +22,9 @@ paramsForIndicator={
     'axes.titlesize':25,
     'axes.labelsize':20,
     'xtick.labelsize':20,
-    'ytick.labelsize':20
+    'ytick.labelsize':20,
+    'legend.fontsize':20,
+    'legend.frameon':False
 }
 
 
@@ -67,6 +69,8 @@ mpl.rcParams['legend.frameon']=False
 mpl.rcParams['savefig.dpi']=100
 mpl.rcParams['savefig.facecolor']='white'
 #mpl.rcParams['savefig.format']='tiff'
+
+mpl.rcParams.update(paramsForIndicator)
 
 
 

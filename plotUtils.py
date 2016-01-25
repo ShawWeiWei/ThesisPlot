@@ -266,7 +266,7 @@ class visualize:
 
             labels = []
             for val2 in value2:
-                    labels.append(keyToLegend[key2][0] + str(val2) + keyToLegend[key2][1])
+                    labels.append(keyToLegend[key2][0] + r'$\mathrm{%s}$'%str(val2) + keyToLegend[key2][1])
             plt.legend(loc='best',labels =labels)
 
         else:
