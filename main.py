@@ -85,19 +85,19 @@ def InhibitorySquare():
     plot_util = visualize(input_util)
     proc_util = process(input_util)
     aML1 = [50]
-    aInh = [5,6,7]
+    aInh = [1,2,3,4,5,6,7]
     for inh in aInh:
+        file_conf.set_p_inh(inh)
         for ml1 in conf[inh]:
             file_conf.set_p_ml1(ml1)
-            file_conf.set_p_ml2(100 - ml1 - inh)
-            plot_util.contourGif()
+            # plot_util.contourGif()
             plot_util.plotSpiralWaves()
-            proc_util.averSSF()
-            proc_util.averSSFList()
-            proc_util.averAutoCorr()
-            proc_util.averAutoCorrList()
-            plot_util.plotAverAutoCorrList()
-            plot_util.plotAverSSFList()
+            # proc_util.averSSF()
+            # proc_util.averSSFList()
+            # proc_util.averAutoCorr()
+            # proc_util.averAutoCorrList()
+            # plot_util.plotAverAutoCorrList()
+            # plot_util.plotAverSSFList()
 
 
 confSparser = [
@@ -137,10 +137,10 @@ def InhibitorySparser():
 
 
 if __name__ == "__main__":
-    file_conf = ExcitoryCouple(50, 0.27, 36, -25, "Square")
-    aGc = [0.27]#[0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32]
-    input_util = input(file_conf)
-    plot_util = visualize(input_util)
-    proc_util = process(input_util)
-    plot_util.plotIndicator('p_ml1',aML1,"",'gc_exc',[0.23,0.24,0.25],'CV')
-    #InhibitorySquare()
+    # file_conf = ExcitoryCouple(50, 0.27, 36, -25, "Square")
+    # aGc = [0.27]#[0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32]
+    # input_util = input(file_conf)
+    # plot_util = visualize(input_util)
+    # proc_util = process(input_util)
+    # plot_util.plotIndicator('p_ml1',aML1,"",'gc_exc',[0.23,0.24,0.25],'CV')
+    InhibitorySquare()

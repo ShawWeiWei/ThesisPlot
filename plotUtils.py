@@ -119,13 +119,14 @@ class visualize:
 
     def plotSpiralWaves(self, listoftime=time_array):
         filter_array = listoftime[-25:]  # filter(lambda x:int(x)>4500,time_array)
-        fig = plt.figure()
+        plt.clf()
         for t in filter_array:
             data = self.input_config.inputSpiralWave(t)
             plt.clf()
             plt.contourf(data)
             plt.xlabel('Network Column Index')
             plt.ylabel('Network Row Index')
+            plt.title(self.input_config.plot_title)
             plt.clim(-60, 40)
             cbar = plt.colorbar()
             # plt.show()
@@ -134,7 +135,7 @@ class visualize:
                                      % (self.input_config.spec, t)))
             del data
             del cbar
-        plt.close()
+        # plt.close()
 
     def plotTimeSeries(self):
         data = self.input_config.inputTimeSeries()
