@@ -4,6 +4,7 @@
 import types
 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import moviepy.editor as mpy
 from moviepy.video.io.bindings import mplfig_to_npimage
 
@@ -25,15 +26,15 @@ class visualize:
             'NetISI':[self.input_config.inputAverISI,meanOfList,'Average ISI of Network','NetISI'],
             'ISI1':[self.input_config.inputAverISIType1,meanOfList,'Average ISI of different types','NetISIForIAndII','Type I'],
             'ISI2':[self.input_config.inputAverISIType2,meanOfList,'Average ISI of different types','NetISIForIAndII','Type II'],
-            'Fre':[self.input_config.inputAverISI,firingRate,'average frequency of network','FiringRate'],
-            'Fre1':[self.input_config.inputAverISIType1,firingRate,'average frequency of different types','FiringRateForIAndII','Type I'],
-            'Fre2':[self.input_config.inputAverISIType2,firingRate,'average frequency of different types','FiringRateForIAndII','Type II'],
-            'CV':[self.input_config.inputCV,meanOfList,'Average CV of Network','NetCV'],
-            'CV1':[self.input_config.inputCVType1,meanOfList,'Average CV of different types','NetCVForIAndII','Type I'],
-            'CV2':[self.input_config.inputCVType2,meanOfList,'Average CV of different types','NetCVForIAndII','Type II'],
-            'PhaseOrder':[self.input_config.inputPhaseAmplitude,meanOfList,'The synchronization index','PhaseOrder'],
-            'AutoCorrSNR':[self.input_config.inputAverAutoCorrList,firstPeakAC,'SNR of AutoCorrelation','AutoCorrSNR'],
-            'SSFSNR':[self.input_config.inputAverSSFList,firstPeakFFT2,'SNR of Spatial Structural Function','SSFSNR']
+            'Fre':[self.input_config.inputAverISI,firingRate,'average frequency','FiringRate'],
+            'Fre1':[self.input_config.inputAverISIType1,firingRate,'average frequency','FiringRateForIAndII','Type I'],
+            'Fre2':[self.input_config.inputAverISIType2,firingRate,'average frequency','FiringRateForIAndII','Type II'],
+            'CV':[self.input_config.inputCV,meanOfList,'average CV of Network','NetCV'],
+            'CV1':[self.input_config.inputCVType1,meanOfList,'average CV','NetCVForIAndII','Type I'],
+            'CV2':[self.input_config.inputCVType2,meanOfList,'average CV','NetCVForIAndII','Type II'],
+            'PhaseOrder':[self.input_config.inputPhaseAmplitude,meanOfList,'synchronization index','PhaseOrder'],
+            'AutoCorrSNR':[self.input_config.inputAverAutoCorrList,firstPeakAC,'$\mathrm{SNR}_\mathrm{cc}$','AutoCorrSNR'],
+            'SSFSNR':[self.input_config.inputAverSSFList,firstPeakFFT2,'$\mathrm{SNR}_\mathrm{cp}$','SSFSNR']
         }
 
     def set_input_config(self, input_config):
@@ -71,7 +72,7 @@ class visualize:
             im.set_visible = types.MethodType(setvisible, im)
             im.axes = plt.gca()
 
-            plt.title(self.input_config.plot_title)
+            plt.title(self.input_config.plot_title,fontsize=15)
             return mplfig_to_npimage(fig)
 
         data = []
@@ -122,6 +123,7 @@ class visualize:
         del data[:]
         plt.close()
     def plotSpiralWave(self,time,title):
+        mpl.rcParams.update(paramsForSpatialPattern)
         data = self.input_config.inputSpiralWave(time)
         plt.clf()
         plt.contourf(data)
@@ -139,10 +141,10 @@ class visualize:
         plt.clim(-60, 40)
         cbar = plt.colorbar()
         plt.title(title,y=1.02)
-        plt.subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
+        plt.subplots_adjust(left = 0.15,bottom = 0.15,right = 0.9,top = 0.9)
 
         checkDirExists(self.input_config)
-        plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f_SpatialPattern.tiff' \
+        plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_t=%.5f_SpatialPattern.png' \
                                  % (self.input_config.spec, time)))
         del data
         del cbar
@@ -188,35 +190,72 @@ class visualize:
 
     def plotAverSSF(self):
         # todo
+        mpl.rcParams.update(paramsForSurface)
+
+        fig = plt.figure()
+        ax = Axes3D(fig)
+        X = range(1,65)
+        Y = range(1,65)
+        X, Y = np.meshgrid(X, Y)
+        # R = np.sqrt(X**2 + Y**2)
         data = self.input_config.inputAverSSF()
+
+        ax.plot_surface(X, Y, data, rstride=1, cstride=1, cmap='Blues_r')
+        ax.set_title('(a)')
+        ax.set_xlabel(r'$k_x$')
+        ax.set_ylabel(r'$k_y$')
+        # ax.set_xticklabels()
+        # ax.zaxis.set_scale('log')
+        zticks = ax.get_zticklabels()
+        # ax.set_zticks(np.log10(zticks))
+        ax.set_zticklabels(zticks)
+        ax.set_zscale('log')
+        ax.set_xlim([1,64])
+        ax.set_ylim([1,64])
+        plt.show()
+        checkDirExists(self.input_config)
+        # plt.savefig(os.path.join(self.input_config.visual_direct, u'%s_AverSSF.tiff' % self.input_config.spec))
+
 
     def plotAverAutoCorr(self):
         # todo
         data = self.input_config.inputAverAutoCorr()
 
-    def plotAverSSFList(self):
+    def plotAverSSFList(self,title_str=""):
+        mpl.rcParams.update(paramsForList)
         data = self.input_config.inputAverSSFList()
         fig = plt.figure()
         plt.clf()
-        plt.plot(data)
-        plt.xlabel('radius')
-        plt.ylabel('circular average')
+        plt.plot(data[:,0],data[:,1])
+        plt.xlabel('$r$')
+        plt.ylabel('$cp$')
         plt.yscale('log')
         checkDirExists(self.input_config)
-        plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverSSFList.png' % self.input_config.spec),
-                    format='png')
+        plt.title(title_str,y = 1.02)
+        plt.subplots_adjust(left = 0.15,bottom = 0.15,right = 0.9,top = 0.9)
+        ytickss = plt.yticks()[0]
+        if ytickss[-1] == ytickss[::2][-1]:
+            plt.yticks(ytickss[::2])
+        elif ytickss[-1] == ytickss[::3][-1]:
+            plt.yticks(ytickss[::3])
+        elif ytickss[-1] == ytickss[::5][-1]:
+            plt.yticks(ytickss[::5])
+        plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverSSFList.tiff' % self.input_config.spec),dpi=50)
         plt.close()
 
-    def plotAverAutoCorrList(self):
+    def plotAverAutoCorrList(self,title_str=''):
+        mpl.rcParams.update(paramsForList)
         data = self.input_config.inputAverAutoCorrList()
         fig = plt.figure()
         plt.clf()
         plt.plot(data)
-        plt.xlabel('radius')
-        plt.ylabel('circular average')
+        plt.xlabel('$r$')
+        plt.ylabel('$cc$')
         checkDirExists(self.input_config)
-        plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverAutoCorrList.png' % self.input_config.spec),
-                    format='png')
+        plt.title(title_str,y = 1.02)
+        plt.subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
+        plt.yticks([-0.2,0.4,1])
+        plt.savefig(os.path.join(self.input_config.visual_direct, '%s_AverAutoCorrList.tiff' % self.input_config.spec),dpi=50)
         plt.close()
 
     def plotSquareForLowISI(self):
@@ -240,12 +279,16 @@ class visualize:
 
     ###The composite operation
     def plotIndicator(self, key1,value1, title="",key2=None,value2=None,*indicators):
+        mpl.rcParams.update(paramsForIndicator)
 
         fig = plt.figure()
         plt.clf()
         func1 = self._getFileConfFunc(key1)
 
         plot_line_index = 0
+
+        Out=[]
+
 
         if not key2==None:
             if not len(indicators) == 1:
@@ -259,8 +302,16 @@ class visualize:
                 for val1 in value1:
                      func1(val1)
                      data = self.proc_indicator[indicators[0]][0]()
-                     quant.append(self.proc_indicator[indicators[0]][1](data))
+                     computeddata = data
+                     if indicators[0] == 'SSFSNR':
+                         computeddata = data[:,1]
+                     indic = self.proc_indicator[indicators[0]][1](computeddata)
+                     quant.append(indic)
+                     Out.append([val1,indic])
+
                 #todo legend
+                print quant
+
                 plt.plot(value1,quant,plotCharacter[plot_line_index])
                 plot_line_index+=1
 
@@ -270,12 +321,16 @@ class visualize:
             plt.legend(loc='best',labels =labels)
 
         else:
+            if key1 == 'inh':
+                value1=conf[self.input_config.file_configure.p_inh]
             for indicator in indicators:
                 quant = []
                 for val1 in value1:
                     func1(val1)
                     data = self.proc_indicator[indicator][0]()
-                    quant.append(self.proc_indicator[indicator][1](data))
+                    indic = self.proc_indicator[indicator][1](data)
+                    quant.append(indic)
+                    Out.append([val1,indic])
                 #todo legend
                 plt.plot(value1, quant,plotCharacter[plot_line_index])
                 plot_line_index+=1
@@ -285,17 +340,32 @@ class visualize:
                     labels.append(self.proc_indicator[indicator][4])
                 plt.legend(loc='best',labels =labels)
 
+        dataOut=np.array(Out)
+        dataOut=dataOut.transpose()
         #todo title and legend
         plt.title(title,y = 1.02)
         plt.subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
         plt.xlabel(makeXLabel(key1))
         plt.ylabel(self.proc_indicator[indicators[0]][2])
+
+        if indicators[0]=='AutoCorrSNR':
+            ylim_min = plt.ylim()[0]
+            ylim_max = plt.ylim()[1]
+
+            ylim_max_new = ylim_max + 0.5*(ylim_max-ylim_min)
+            plt.ylim([ylim_min,ylim_max_new])
+        #sparse yticks
+        max_yticks = 5
+        yloc = plt.MaxNLocator(max_yticks)
+        plt.gca().yaxis.set_major_locator(yloc)
         if not key2 == None:
             midname = composeFileName(self.input_config,key1,key2)
         else:
             midname = composeFileName(self.input_config,key1)
         plt.savefig(os.path.join(Visual, self.input_config.file_configure.coupleType, u'%s_%s.png' % (midname,\
                                                             self.proc_indicator[indicators[0]][3])))
+        np.savetxt(os.path.join(PP, self.input_config.file_configure.coupleType, u'%s_%s.dat' % (midname,\
+                                                            self.proc_indicator[indicators[0]][3])),dataOut)
         plt.close()
 
 

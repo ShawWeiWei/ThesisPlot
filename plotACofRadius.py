@@ -42,16 +42,13 @@ for i in row_dim:
         else:
             pass
 
-b=[[]]*50
-row_dim=range(0,50)
-column_dim=range(0,50)
-for i in row_dim:
-    for j in column_dim:
-        radius=int(np.sqrt(i*i+j*j)+0.5)
-        if radius<50:
-            b[radius]=b[radius]+[[i,j]]
-        else:
-            pass
+b=[]
+dim=range(0,50)
+width = 2
+for i in dim:
+    for j in range(i+1):
+        b.append(np.sqrt(i*i+j*j))
+b=sorted(b)
                         
 #time_array=np.linspace(2020,4980,149)
 composition=u''
@@ -94,7 +91,7 @@ def firstPeakAC(ACofRadius):
     kc=nextMin(ACofRadius,kb)    
     
     #print kc,ACofRadius[kc]
-    return (2.0*ACofRadius[kb]-ACofRadius[ka]-ACofRadius[kc])/(kc-ka),ka,kb,kc
+    return (2.0*ACofRadius[kb]-ACofRadius[ka]-ACofRadius[kc])/(kc-ka)#,ka,kb,kc
     
 def MaximumLeftAndRightMinimum(listAC):
     list_size=len(listAC)
@@ -148,7 +145,7 @@ def firstPeakFFT2(FFT2ofRadius):
     #print kb,ACofRadius[kb]
     kc=nextMin(FFT2ofRadius,kb)
     #print kc,ACofRadius[kc]
-    return 2.0*FFT2ofRadius[kb]/(FFT2ofRadius[ka]+FFT2ofRadius[kc]),ka,kb,kc
+    return 2.0*FFT2ofRadius[kb]/(FFT2ofRadius[ka]+FFT2ofRadius[kc])#,ka,kb,kc
     
 def firstPeakFFT2_Rec(FFT2ofRadius):
     list_size=len(FFT2ofRadius)
@@ -176,11 +173,15 @@ def makeACList(data):
     
 def makeFFT2List(data):
     FFT2ofRadius=[]
-    for i in b:
+    width = 1.5
+    for r in range(50):
         listFFT2=[]
-        for j in i:
-            listFFT2.append(data[j[0]][j[1]])
-        FFT2ofRadius.append(np.average(listFFT2))
+        for i in dim:
+            for j in dim:
+                rr = np.sqrt(i*i+j*j)
+                if  rr >= (r-width) and rr <=(r+width):#int(rr+0.5) == r:
+                    listFFT2.append(data[i][j])
+        FFT2ofRadius.append([r,np.average(listFFT2)])
         del listFFT2
     return FFT2ofRadius 
     

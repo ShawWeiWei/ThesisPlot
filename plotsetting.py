@@ -18,22 +18,50 @@ paramsForSpatialPattern={
 # xtick.labelsize = 20
 # ytick.labelsize = 20
 # subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
-paramsForIndicator={
-    'axes.titlesize':25,
-    'axes.labelsize':20,
+paramsForList={
+    'lines.linewidth':2,
+    'axes.titlesize':30,
+    'axes.labelsize':40,
     'xtick.labelsize':20,
     'ytick.labelsize':20,
     'legend.fontsize':20,
-    'legend.frameon':False
+    'legend.frameon':False,
+    'savefig.dpi':100
 }
-
+paramsForIndicator={
+    'lines.linewidth':2,
+    'axes.titlesize':25,
+    'axes.labelsize':25,
+    'xtick.labelsize':15,
+    'ytick.labelsize':15,
+    'legend.fontsize':20,
+    'legend.frameon':False,
+    'savefig.dpi':100
+}
+#For plot surface
+# axes.titlesize = 25
+# axes.labelsize = 20
+# xtick.labelsize = 20
+# ytick.labelsize = 20
+# subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
+paramsForSurface={
+    'lines.linewidth':3,
+    'axes.titlesize':25,
+    'axes.labelsize':20,
+    'xtick.labelsize':15,
+    'ytick.labelsize':15,
+    'legend.fontsize':20,
+    'legend.frameon':False,
+    'savefig.dpi':400
+}
 
 #line
 mpl.rcParams['lines.linewidth']=2
 #mpl.rcParams['lines.style']='-'
 mpl.rcParams['axes.color_cycle']='black'
 
-plotCharacter=['k-','k--','k-.','k:','k*-']
+#['k-','k--','k-.','k*-','k:']
+plotCharacter=['k-','k--','k-.','k*-','k:']
 
 #text
 mpl.rcParams['text.color']='black'
@@ -66,7 +94,7 @@ mpl.rcParams['legend.fontsize']=20
 mpl.rcParams['legend.frameon']=False
 
 #saving figures
-mpl.rcParams['savefig.dpi']=100
+mpl.rcParams['savefig.dpi']=400
 mpl.rcParams['savefig.facecolor']='white'
 #mpl.rcParams['savefig.format']='tiff'
 

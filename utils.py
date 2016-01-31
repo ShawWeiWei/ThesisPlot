@@ -46,6 +46,8 @@ def judgeKey(filename,key):
         return replaceKey(filename, "pML1")
     elif key == "p_ml2":
         return replaceKey(filename, "pML2")
+    elif key == "p_inh":
+        return replaceKey(filename,'pML2')
     else:
         raise ValueError
 
@@ -72,7 +74,7 @@ def procSSF(averSSF):
 
 def makeXLabel(key):
     if key == "gc_exc":
-        return "excitatory coupling intensity"
+        return "$g_s$"
     elif key == "gc_inh":
         return "inhibitory coupling intensity"
     elif key == "v_exc":
@@ -82,11 +84,13 @@ def makeXLabel(key):
     elif key == "threshold":
         return "threshold"
     elif key == "p":
-        return "rewiring probability"
+        return "$p$"
     elif key == "p_ml1":
-        return "the percentage of ml1"
+        return "$p_1$"
     elif key == "p_ml2":
-        return "the percentage of ml2"
+        return "$p_2$"
+    elif key == "p_inh":
+        return "$p_inh$"
     else:
         raise ValueError
 
