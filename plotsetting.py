@@ -20,8 +20,8 @@ paramsForSpatialPattern={
 # subplots_adjust(left = 0.15,bottom = 0.14,right = 0.9,top = 0.9)
 paramsForList={
     'lines.linewidth':2,
-    'axes.titlesize':30,
-    'axes.labelsize':40,
+    'axes.titlesize':22,
+    'axes.labelsize':30,
     'xtick.labelsize':20,
     'ytick.labelsize':20,
     'legend.fontsize':20,

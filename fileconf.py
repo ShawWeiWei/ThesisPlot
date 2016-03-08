@@ -109,6 +109,7 @@ class InhibitoryCouple:
 
     def set_p_inh(self, p_inh):
         self.p_inh = p_inh
+        self.p_ml2 = 100 - p_inh - self.p_ml1
         self.update()
 
     def set_con(self, con):

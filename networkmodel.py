@@ -1,10 +1,11 @@
+# This Python file uses the following encoding: utf-8
 import numpy as np
 import matplotlib.pyplot as plt
 from plotsetting import *
 
 mpl.rcParams['lines.linewidth'] = 0.5
 
-marker_size = 7
+marker_size = 25
 color_type = 'black'
 
 N = 16
@@ -19,6 +20,7 @@ y = R * np.sin(angle)
 def plotSquare():
     plt.clf()
     dim = 6
+    mpl.rcParams['lines.linewidth'] = 1
     for i in range(dim):
         for j in range(dim):
             plt.plot(i, j, 'k.', markersize=marker_size)
@@ -35,10 +37,11 @@ def plotSquare():
                 plt.plot([i, i], [j + 1, j], color='black')
     plt.axis('equal')
     plt.axis('off')
-    plt.title('(a)')
-    plt.xlim([-2, dim + 1])
-    plt.ylim([-2, dim + 1])
-    plt.savefig('squareNetwork.tiff',dpi = 200)
+    # plt.title('(a)')
+    plt.title(u'Square Network')
+    plt.xlim([-1, dim])
+    plt.ylim([-1, dim])
+    plt.savefig(u'方格网络.png',dpi = 100)
 
 
 def makeRegular():
@@ -94,10 +97,11 @@ def plotRegular():
 
     plt.axis('equal')
     plt.axis('off')
-    plt.title('(b)')
+    # plt.title('(b)')
+    plt.title('Nearest-Neighbor Coupled Network')
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
-    plt.savefig('Regular.tiff',dpi = 200)
+    plt.savefig('Regular.png',dpi = 100)
 
 
 def plotFullConnectedNetwork():
@@ -112,8 +116,9 @@ def plotFullConnectedNetwork():
     plt.axis('off')
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
-    plt.title('(d)')
-    plt.savefig('FullConnected.tiff',dpi = 200)
+    # plt.title('(d)')
+    plt.title('Globally Coupled Network')
+    plt.savefig('FullConnected.png',dpi = 100)
 
 def plotStarCoupledNetwork():
     plt.clf()
@@ -125,10 +130,11 @@ def plotStarCoupledNetwork():
 
     plt.axis('equal')
     plt.axis('off')
-    plt.title('(c)')
+    # plt.title('(c)')
+    plt.title('Star Coupled Network')
     plt.xlim([-R - border, R + border])
     plt.ylim([-R - border, R + border])
-    plt.savefig('StarConnected.tiff',dpi  = 200)
+    plt.savefig('StarConnected.png',dpi  = 100)
 
 
 def plotWSSmallWorld(p):
@@ -283,6 +289,7 @@ def plotGenerateNW():
 
 def plotGenerateSparser():
     dim = 10
+    marker_size = 10
     plt.clf()
     plt.subplot(131)
     for i in range(dim):
@@ -305,8 +312,11 @@ def plotGenerateSparser():
     plt.ylim([-1, dim])
     # plt.title('p = 0')
     plt.text((float(dim)-1)/2,dim,'(a)',ha = 'center', va = 'center')
+
+    rand_seed  = 1
     plt.subplot(132)
     p = 0.1
+    np.random.seed(rand_seed)
     for i in range(dim):
         for j in range(dim):
             plt.plot(i, j, 'k.', markersize=marker_size)
@@ -330,6 +340,7 @@ def plotGenerateSparser():
 
     plt.subplot(133)
     p = 0.2
+    np.random.seed(rand_seed)
     for i in range(dim):
         for j in range(dim):
             plt.plot(i, j, 'k.', markersize=marker_size)
@@ -350,14 +361,14 @@ def plotGenerateSparser():
     plt.ylim([-1, dim])
     # plt.title('p = 1')
     plt.text((float(dim)-1)/2,dim,'(c)',ha = 'center', va = 'center')
-
+    # plt.show()
     plt.savefig('Generate Sparser.tiff',dpi = 400)
 if __name__ == '__main__':
     #plt.show()
-    #plotSquare()
-    #plotRegular()
-    #plotFullConnectedNetwork()
-    #plotStarCoupledNetwork()
+    # plotSquare()
+    # plotRegular()
+    # plotFullConnectedNetwork()
+    # plotStarCoupledNetwork()
     #plotFullConnectedNetwork()
     #plotSmallWorld(0.2)
     #plotGenerateSW()

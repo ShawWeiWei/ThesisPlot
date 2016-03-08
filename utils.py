@@ -32,6 +32,13 @@ def replaceKey(str, key):
     post = str.split(key)[1].index("_")
     return str[0:pre + 1] + "(variant)" + str[pre + post:]
 
+def replaceP(str):
+    pre = str.index("_")
+    if str[:pre]!="Sparser" and str[:pre]!="SmallWorld":
+        raise ValueError
+    dashed_str = str[pre+1:]
+    post = dashed_str.index("_")
+    return str[:pre]+"(variant)"+dashed_str[post:]
 
 def composeFileName(input_config,*keys):
     filename = input_config.file_configure.conn + '_' + input_config.file_configure.compos + '_' + \
@@ -40,7 +47,7 @@ def composeFileName(input_config,*keys):
 
 
 def judgeKey(filename,key):
-    if key == "gc_exc" or key == "gc_inh" or key == "v_exc" or key == "v_inh" or key == "threshold" or key == 'p':
+    if key == "gc_exc" or key == "gc_inh" or key == "v_exc" or key == "v_inh" or key == "threshold":
         return replaceKey(filename, key)
     elif key == "p_ml1":
         return replaceKey(filename, "pML1")
@@ -48,6 +55,8 @@ def judgeKey(filename,key):
         return replaceKey(filename, "pML2")
     elif key == "p_inh":
         return replaceKey(filename,'pML2')
+    elif key == "p":
+        return replaceP(filename)
     else:
         raise ValueError
 
@@ -90,7 +99,7 @@ def makeXLabel(key):
     elif key == "p_ml2":
         return "$p_2$"
     elif key == "p_inh":
-        return "$p_inh$"
+        return "$p_{inh}$"
     else:
         raise ValueError
 
